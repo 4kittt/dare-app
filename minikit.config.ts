@@ -15,9 +15,9 @@ export const minikitConfig = {
   },
   miniapp: {
     version: "1",
-    name: "Cubey", 
-    subtitle: "Your AI Ad Companion", 
-    description: "Ads",
+    name: "Dare & Proof",
+    subtitle: "Community Challenges on Farcaster",
+    description: "Accept dares, submit proofs, win rewards",
     screenshotUrls: [`${ROOT_URL}/screenshot-portrait.png`],
     iconUrl: `${ROOT_URL}/blue-icon.png`,
     splashImageUrl: `${ROOT_URL}/blue-hero.png`,
@@ -33,4 +33,3 @@ export const minikitConfig = {
     ogImageUrl: `${ROOT_URL}/blue-hero.png`,
   },
 } as const;
-

@@ -1,14 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Rye&family=Special+Elite&display=swap');
+@import "tailwindcss";
+
 @layer base {
   :root {
-    --background: #ffffff;
-    --foreground: #171717;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --background: #0a0a0a;
-      --foreground: #ededed;
-    }
+    --background: #f4f1e8;
+    --foreground: #8b4513;
   }
 
   html,
@@ -20,7 +16,7 @@
   body {
     color: var(--foreground);
     background: var(--background);
-    font-family: var(--font-inter), sans-serif;
+    font-family: 'Special Elite', monospace;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
