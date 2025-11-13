@@ -6,7 +6,7 @@
   },
   "miniapp": {
     "version": "1",
-    "name": "DARE",
+    "name": "DareUp",
     "subtitle": "Community Challenges on Farcaster",
     "description": "Accept dares, submit proofs, win rewards",
     "screenshotUrls": ["https://dareup.vercel.app/screenshot-portrait.png"],

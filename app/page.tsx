@@ -142,7 +142,7 @@ export default function Home() {
       <div className="container mx-auto px-4 py-6">
         <header className="text-center mb-8">
           <h1 className="font-rye text-4xl text-brown mb-2">
-            Dare & Proof
+            DareUp
           </h1>
           <p className="text-brown font-special-elite">
             Community challenges on Farcaster

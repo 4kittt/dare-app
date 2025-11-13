@@ -15,7 +15,7 @@ export const minikitConfig = {
   },
   miniapp: {
     version: "1",
-    name: "DARE",
+    name: "DareUp",
     subtitle: "Community Challenges on Farcaster",
     description: "Accept dares, submit proofs, win rewards",
     screenshotUrls: [`${ROOT_URL}/screenshot-portrait.png`],
