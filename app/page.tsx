@@ -120,8 +120,8 @@ export default function Home() {
       {showOnboarding && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50">
           <div className="bg-parchment border-2 border-brown rounded-lg p-6 max-w-md">
-            <h2 className="font-rye text-2xl text-brown mb-4 text-center">
-              Welcome to Dare & Proof! 🤠
+            <h2 className="font-special-elite text-2xl text-brown mb-4 text-center">
+              Welcome to DareUP! 🤠
             </h2>
             <div className="space-y-3 text-brown font-special-elite mb-6">
               <p>• Accept community challenges</p>

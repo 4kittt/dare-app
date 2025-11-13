@@ -1,0 +1,29 @@
+{
+  "accountAssociation": {
+    "header": "eyJmaWQiOjM4MTQ2NywidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDBmQTgzNzk3MGZDNGM0YTNmZGI0OUQ0MEIzNTY2YjMwMzg1NzU5NjcifQ",
+    "payload": "eyJkb21haW4iOiJkYXJldXAudmVyY2VsLmFwcCJ9",
+    "signature": "MHhhY2NlN2UwZTcyMjJkMDM4NTU0MDc1YTM3NmMzZmUyYzdhZWU0YTdmYzc3OWFhZmQ4Mjk3MzNjNjYxMmVhMWQwNGZiM2RjNTQ4OTBjZGM1OWY3NTI0YmRmNzNlZGRmY2RjMGE5OWUwMWI2NTZkMmVkODQ1NTk4YzZiMzY3YzExMTFi"
+  },
+  "miniapp": {
+    "version": "1",
+    "name": "DARE",
+    "subtitle": "Community Challenges on Farcaster",
+    "description": "Accept dares, submit proofs, win rewards",
+    "screenshotUrls": ["https://dareup.vercel.app/screenshot-portrait.png"],
+    "iconUrl": "https://dareup.vercel.app/blue-icon.png",
+    "splashImageUrl": "https://dareup.vercel.app/blue-hero.png",
+    "splashBackgroundColor": "#000000",
+    "homeUrl": "https://dareup.vercel.app",
+    "webhookUrl": "https://api.neynar.com/f/app/71b2ec3e-f75b-4917-b178-06bd17051bcd/event",
+    "primaryCategory": "social",
+    "tags": ["social", "games", "challenges", "community"],
+    "heroImageUrl": "https://dareup.vercel.app/blue-hero.png",
+    "tagline": "",
+    "ogTitle": "",
+    "ogDescription": "",
+    "ogImageUrl": "https://dareup.vercel.app/blue-hero.png"
+  },
+  "baseBuilder": {
+    "ownerAddress": "0x8787Aa06854592aEAC677e5928E88011a4A88446"
+  }
+}
