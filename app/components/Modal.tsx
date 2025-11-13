@@ -37,7 +37,7 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
             <h2 className="font-rye text-2xl text-brown">{title}</h2>
             <button
               onClick={onClose}
-              className="text-brown hover:text-gold text-2xl leading-none min-h-[44px] min-w-[44px] flex items-center justify-center"
+              className="text-brown hover:text-gold text-2xl leading-none min-h-11 min-w-11 flex items-center justify-center"
               aria-label="Close"
             >
               ✕
@@ -97,7 +97,7 @@ export function CreateDareModal({ isOpen, onClose, onCreateDare }: CreateDareMod
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full p-2 border border-brown rounded bg-white text-brown font-special-elite min-h-[44px]"
+            className="w-full p-2 border border-brown rounded bg-white text-brown font-special-elite min-h-11"
             placeholder="Ex: Dance on a public square"
             required
           />
@@ -111,7 +111,7 @@ export function CreateDareModal({ isOpen, onClose, onCreateDare }: CreateDareMod
             id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full p-2 border border-brown rounded bg-white text-brown font-special-elite min-h-[80px] resize-none"
+            className="w-full p-2 border border-brown rounded bg-white text-brown font-special-elite min-h-20 resize-none"
             placeholder="Describe the challenge in detail..."
             required
           />
@@ -126,7 +126,7 @@ export function CreateDareModal({ isOpen, onClose, onCreateDare }: CreateDareMod
             type="text"
             value={reward}
             onChange={(e) => setReward(e.target.value)}
-            className="w-full p-2 border border-brown rounded bg-white text-brown font-special-elite min-h-[44px]"
+            className="w-full p-2 border border-brown rounded bg-white text-brown font-special-elite min-h-11"
             placeholder="Ex: 0.01 ETH"
             required
           />
@@ -136,14 +136,14 @@ export function CreateDareModal({ isOpen, onClose, onCreateDare }: CreateDareMod
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-rye px-4 py-2 rounded-lg transition-colors min-h-[44px]"
+            className="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-rye px-4 py-2 rounded-lg transition-colors min-h-11"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={isSubmitting}
-            className="flex-1 bg-gold hover:bg-yellow-600 disabled:bg-gray-400 text-brown font-rye px-4 py-2 rounded-lg transition-colors min-h-[44px]"
+            className="flex-1 bg-gold hover:bg-yellow-600 disabled:bg-gray-400 text-brown font-rye px-4 py-2 rounded-lg transition-colors min-h-11"
           >
             {isSubmitting ? 'Creating...' : 'Create'}
           </button>
@@ -208,7 +208,7 @@ export function UploadProofModal({ isOpen, onClose, dareTitle, onUploadProof }: 
             type="file"
             accept="image/*,video/*"
             onChange={handleFileChange}
-            className="w-full p-2 border border-brown rounded bg-white text-brown font-special-elite min-h-[44px]"
+            className="w-full p-2 border border-brown rounded bg-white text-brown font-special-elite min-h-11"
             required
           />
           {file && (
@@ -222,14 +222,14 @@ export function UploadProofModal({ isOpen, onClose, dareTitle, onUploadProof }: 
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-rye px-4 py-2 rounded-lg transition-colors min-h-[44px]"
+            className="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-rye px-4 py-2 rounded-lg transition-colors min-h-11"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={isUploading || !file}
-            className="flex-1 bg-gold hover:bg-yellow-600 disabled:bg-gray-400 text-brown font-rye px-4 py-2 rounded-lg transition-colors min-h-[44px]"
+            className="flex-1 bg-gold hover:bg-yellow-600 disabled:bg-gray-400 text-brown font-rye px-4 py-2 rounded-lg transition-colors min-h-11"
           >
             {isUploading ? 'Sending...' : 'Send'}
           </button>

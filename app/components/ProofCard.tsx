@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { toast } from 'sonner';
+import Image from 'next/image';
 
 interface Proof {
   id: string;
@@ -65,9 +66,11 @@ export function ProofCard({ proof, onApprove, onReject }: ProofCardProps) {
 
       {proof.fileUrl && (
         <div className="mb-4">
-          <img
+          <Image
             src={proof.fileUrl}
             alt="Submitted proof"
+            width={300}
+            height={200}
             className="w-full max-w-xs rounded-lg border border-brown"
           />
         </div>
@@ -78,14 +81,14 @@ export function ProofCard({ proof, onApprove, onReject }: ProofCardProps) {
           <button
             onClick={handleApprove}
             disabled={isProcessing}
-            className="bg-green-500 hover:bg-green-600 disabled:bg-gray-400 text-white font-rye px-4 py-2 rounded-lg transition-colors min-h-[44px]"
+            className="bg-green-500 hover:bg-green-600 disabled:bg-gray-400 text-white font-rye px-4 py-2 rounded-lg transition-colors min-h-11"
           >
             {isProcessing ? 'Processing...' : 'Approve'}
           </button>
           <button
             onClick={handleReject}
             disabled={isProcessing}
-            className="bg-red-500 hover:bg-red-600 disabled:bg-gray-400 text-white font-rye px-4 py-2 rounded-lg transition-colors min-h-[44px]"
+            className="bg-red-500 hover:bg-red-600 disabled:bg-gray-400 text-white font-rye px-4 py-2 rounded-lg transition-colors min-h-11"
           >
             {isProcessing ? 'Processing...' : 'Reject'}
           </button>

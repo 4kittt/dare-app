@@ -40,7 +40,7 @@ export function DareCard({ dare, onAccept }: DareCardProps) {
         <button
           onClick={handleAccept}
           disabled={isAccepting || dare.accepted}
-          className="bg-gold hover:bg-yellow-600 disabled:bg-gray-400 text-brown font-rye px-4 py-2 rounded-lg transition-colors min-h-[44px] min-w-[100px]"
+          className="bg-gold hover:bg-yellow-600 disabled:bg-gray-400 text-brown font-rye px-4 py-2 rounded-lg transition-colors min-h-11 min-w-[100px]"
         >
           {isAccepting ? 'Accepting...' : dare.accepted ? 'Accepted' : 'Accept'}
         </button>

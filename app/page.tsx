@@ -131,7 +131,7 @@ export default function Home() {
             </div>
             <button
               onClick={handleCloseOnboarding}
-              className="w-full bg-gold hover:bg-yellow-600 text-brown font-rye px-4 py-3 rounded-lg transition-colors min-h-[44px]"
+              className="w-full bg-gold hover:bg-yellow-600 text-brown font-rye px-4 py-3 rounded-lg transition-colors min-h-11"
             >
               Start the adventure!
             </button>
@@ -154,7 +154,7 @@ export default function Home() {
           <div className="bg-sand border-2 border-brown rounded-lg p-1">
             <button
               onClick={() => setActiveTab('dares')}
-              className={`px-6 py-2 rounded-md font-rye transition-colors min-h-[44px] ${
+              className={`px-6 py-2 rounded-md font-rye transition-colors min-h-11 ${
                 activeTab === 'dares'
                   ? 'bg-gold text-brown'
                   : 'text-brown hover:bg-parchment'
@@ -164,7 +164,7 @@ export default function Home() {
             </button>
             <button
               onClick={() => setActiveTab('proofs')}
-              className={`px-6 py-2 rounded-md font-rye transition-colors min-h-[44px] ${
+              className={`px-6 py-2 rounded-md font-rye transition-colors min-h-11 ${
                 activeTab === 'proofs'
                   ? 'bg-gold text-brown'
                   : 'text-brown hover:bg-parchment'
@@ -182,7 +182,7 @@ export default function Home() {
               <h2 className="font-rye text-2xl text-brown">Available challenges</h2>
               <button
                 onClick={() => setShowCreateModal(true)}
-                className="bg-gold hover:bg-yellow-600 text-brown font-rye px-4 py-2 rounded-lg transition-colors min-h-[44px]"
+                className="bg-gold hover:bg-yellow-600 text-brown font-rye px-4 py-2 rounded-lg transition-colors min-h-11"
               >
                 + New challenge
               </button>
@@ -210,7 +210,7 @@ export default function Home() {
                           setSelectedDareForProof(dare);
                           setShowUploadModal(true);
                         }}
-                        className="bg-green-500 hover:bg-green-600 text-white font-rye px-4 py-2 rounded-lg transition-colors min-h-[44px] min-w-[120px]"
+                        className="bg-green-500 hover:bg-green-600 text-white font-rye px-4 py-2 rounded-lg transition-colors min-h-11 min-w-[120px]"
                       >
                         Submit proof
                       </button>

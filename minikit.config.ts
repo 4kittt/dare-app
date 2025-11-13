@@ -15,7 +15,7 @@ export const minikitConfig = {
   },
   miniapp: {
     version: "1",
-    name: "Dare & Proof",
+    name: "DARE",
     subtitle: "Community Challenges on Farcaster",
     description: "Accept dares, submit proofs, win rewards",
     screenshotUrls: [`${ROOT_URL}/screenshot-portrait.png`],
@@ -25,7 +25,7 @@ export const minikitConfig = {
     homeUrl: ROOT_URL,
     webhookUrl: `${ROOT_URL}/api/webhook`,
     primaryCategory: "social",
-    tags: ["marketing", "ads", "quickstart", "waitlist"],
+    tags: ["social", "games", "challenges", "community"],
     heroImageUrl: `${ROOT_URL}/blue-hero.png`, 
     tagline: "",
     ogTitle: "",
