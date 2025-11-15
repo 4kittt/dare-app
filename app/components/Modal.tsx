@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
+import { useComposeCast } from '@coinbase/onchainkit/minikit';
 
 interface ModalProps {
   isOpen: boolean;
@@ -57,8 +58,10 @@ interface CreateDareModalProps {
 }
 
 export function CreateDareModal({ isOpen, onClose, onCreateDare }: CreateDareModalProps) {
+  const { composeCast } = useComposeCast();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [tags, setTags] = useState('');
   const [reward, setReward] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -71,15 +74,45 @@ export function CreateDareModal({ isOpen, onClose, onCreateDare }: CreateDareMod
 
     setIsSubmitting(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const castText = `dare: ${title} - ${description} for ${reward} prize! ${tags.trim()}`;
+      const mentions: { fid: number }[] = [];
+
+      if (tags.trim()) {
+        const usernames = tags.split(',').map(s => s.trim()).filter(s => s.startsWith('@'));
+        for (const userTag of usernames) {
+          const username = userTag.slice(1);
+          try {
+            const response = await fetch(`https://api.neynar.com/v2/farcaster/user/search?q=${username}`, {
+              headers: {
+                'accept': 'application/json',
+                'x-api-key': process.env.NEXT_PUBLIC_NEYNAR_API_KEY as string,
+              },
+            });
+            if (response.ok) {
+              const data = await response.json();
+              if (data.result && data.result.users.length > 0) {
+                const user = data.result.users.find((u: { username: string; fid: number }) => u.username === username);
+                if (user) {
+                  mentions.push({ fid: user.fid });
+                }
+              }
+            }
+          } catch (e) {
+            console.log('Error resolving mention', username, e);
+          }
+        }
+      }
+
+      composeCast({ text: castText });
       onCreateDare({ title: title.trim(), description: description.trim(), reward: reward.trim() });
-      toast.success('Challenge created successfully!');
+      toast.success('Challenge created and composer opened!');
       setTitle('');
       setDescription('');
+      setTags('');
       setReward('');
       onClose();
-    } catch {
-      toast.error('Error creating the challenge');
+    } catch (error) {
+      toast.error('Error creating the challenge: ' + (error as Error).message);
     } finally {
       setIsSubmitting(false);
     }
@@ -97,7 +130,7 @@ export function CreateDareModal({ isOpen, onClose, onCreateDare }: CreateDareMod
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full p-2 border border-brown rounded bg-white text-brown font-special-elite min-h-11"
+            className="w-full p-2 border border-brown rounded bg-white text-gray-900 font-special-elite min-h-11"
             placeholder="Ex: Dance on a public square"
             required
           />
@@ -111,7 +144,7 @@ export function CreateDareModal({ isOpen, onClose, onCreateDare }: CreateDareMod
             id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full p-2 border border-brown rounded bg-white text-brown font-special-elite min-h-20 resize-none"
+            className="w-full p-2 border border-brown rounded bg-white text-gray-900 font-special-elite min-h-20 resize-none"
             placeholder="Describe the challenge in detail..."
             required
           />
@@ -126,9 +159,23 @@ export function CreateDareModal({ isOpen, onClose, onCreateDare }: CreateDareMod
             type="text"
             value={reward}
             onChange={(e) => setReward(e.target.value)}
-            className="w-full p-2 border border-brown rounded bg-white text-brown font-special-elite min-h-11"
+            className="w-full p-2 border border-brown rounded bg-white text-gray-900 font-special-elite min-h-11"
             placeholder="Ex: 0.01 ETH"
             required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="tags" className="block text-brown font-rye mb-1">
+            Tag friends (optional)
+          </label>
+          <input
+            id="tags"
+            type="text"
+            value={tags}
+            onChange={(e) => setTags(e.target.value)}
+            className="w-full p-2 border border-brown rounded bg-white text-gray-900 font-special-elite min-h-11"
+            placeholder="Ex: @friend1, @friend2"
           />
         </div>
 
@@ -216,7 +263,7 @@ export function UploadProofModal({ isOpen, onClose, dareTitle, onUploadProof }: 
             type="url"
             value={postUrl}
             onChange={(e) => setPostUrl(e.target.value)}
-            className="w-full p-2 border border-brown rounded bg-white text-brown font-special-elite min-h-11"
+            className="w-full p-2 border border-brown rounded bg-white text-gray-900 font-special-elite min-h-11"
             placeholder="https://warpcast.com/username/0x..."
             required
           />
