@@ -32,15 +32,15 @@ export function DareCard({ dare, onAccept }: DareCardProps) {
   };
 
   return (
-    <div className="bg-parchment border-2 border-brown rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow">
-      <h3 className="font-rye text-2xl text-brown mb-2">{dare.title}</h3>
-      <p className="text-brown mb-4 font-special-elite">{dare.description}</p>
+    <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+      <h3 className="font-semibold text-xl text-gray-900 dark:text-gray-100 mb-2">{dare.title}</h3>
+      <p className="text-gray-600 dark:text-gray-400 mb-4">{dare.description}</p>
       <div className="flex justify-between items-center">
-        <span className="text-gold font-bold font-rye">Reward: {dare.reward}</span>
+        <span className="text-primary font-semibold">Reward: {dare.reward}</span>
         <button
           onClick={handleAccept}
           disabled={isAccepting || dare.accepted}
-          className="bg-gold hover:bg-yellow-600 disabled:bg-gray-400 text-brown font-rye px-4 py-2 rounded-lg transition-colors min-h-11 min-w-[100px]"
+          className="bg-primary hover:bg-primary/90 disabled:bg-gray-400 text-white px-4 py-2 rounded-lg transition-colors min-h-11 min-w-[100px] font-medium"
         >
           {isAccepting ? 'Accepting...' : dare.accepted ? 'Accepted' : 'Accept'}
         </button>

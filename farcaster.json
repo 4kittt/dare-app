@@ -7,21 +7,21 @@
   "miniapp": {
     "version": "1",
     "name": "DareUp",
-    "subtitle": "Community Challenges on Farcaster",
-    "description": "Accept dares, submit proofs, win rewards",
+    "subtitle": "Western-Style Community Challenges",
+    "description": "Accept daring challenges, submit epic proofs, win ETH rewards in this wild west of community dares!",
     "screenshotUrls": ["https://dareup.vercel.app/screenshot-portrait.png"],
-    "iconUrl": "https://dareup.vercel.app/blue-icon.png",
-    "splashImageUrl": "https://dareup.vercel.app/blue-hero.png",
-    "splashBackgroundColor": "#000000",
+    "iconUrl": "https://dareup.vercel.app/A%20vintage%20western-st.png",
+    "splashImageUrl": "https://dareup.vercel.app/A%20vintage%20western-st.png",
+    "splashBackgroundColor": "#8B4513",
     "homeUrl": "https://dareup.vercel.app",
     "webhookUrl": "https://api.neynar.com/f/app/71b2ec3e-f75b-4917-b178-06bd17051bcd/event",
     "primaryCategory": "social",
-    "tags": ["social", "games", "challenges", "community"],
-    "heroImageUrl": "https://dareup.vercel.app/blue-hero.png",
-    "tagline": "",
-    "ogTitle": "",
-    "ogDescription": "",
-    "ogImageUrl": "https://dareup.vercel.app/blue-hero.png"
+    "tags": ["social", "games", "challenges", "community", "rewards", "web3"],
+    "heroImageUrl": "https://dareup.vercel.app/A%20vintage%20western-st.png",
+    "tagline": "Ride or Die: Community Dares for the Bold",
+    "ogTitle": "DareUp - Western-Style Community Challenges on Farcaster",
+    "ogDescription": "Join the wild west of community dares! Accept challenges, submit proofs, win ETH rewards. 🤠⚡",
+    "ogImageUrl": "https://dareup.vercel.app/A%20vintage%20western-st.png"
   },
   "baseBuilder": {
     "ownerAddress": "0x8787Aa06854592aEAC677e5928E88011a4A88446"

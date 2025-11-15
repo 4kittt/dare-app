@@ -157,42 +157,38 @@ interface UploadProofModalProps {
   isOpen: boolean;
   onClose: () => void;
   dareTitle: string;
-  onUploadProof: (file: File) => void;
+  onUploadProof: (postUrl: string) => void;
 }
 
 export function UploadProofModal({ isOpen, onClose, dareTitle, onUploadProof }: UploadProofModalProps) {
-  const [file, setFile] = useState<File | null>(null);
-  const [isUploading, setIsUploading] = useState(false);
+  const [postUrl, setPostUrl] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!file) {
-      toast.error('Please select a file');
+    if (!postUrl.trim()) {
+      toast.error('Please enter a post URL');
       return;
     }
 
-    setIsUploading(true);
+    // Basic URL validation for Farcaster/Base posts
+    const urlPattern = /^https:\/\/(warpcast\.com\/|base\.org\/|basescan\.org\/tx\/|optimism\.beacon\.chain\/)/;
+    if (!urlPattern.test(postUrl.trim())) {
+      toast.error('Please enter a valid Farcaster or Base app post URL');
+      return;
+    }
+
+    setIsSubmitting(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      onUploadProof(file);
-      toast.success('Proof submitted successfully!');
-      setFile(null);
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      onUploadProof(postUrl.trim());
+      toast.success('Proof post submitted successfully!');
+      setPostUrl('');
       onClose();
     } catch {
-      toast.error('Error sending the proof');
+      toast.error('Error submitting the proof');
     } finally {
-      setIsUploading(false);
-    }
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files?.[0];
-    if (selectedFile) {
-      if (selectedFile.size > 10 * 1024 * 1024) { // 10MB limit
-        toast.error('The file must not exceed 10MB');
-        return;
-      }
-      setFile(selectedFile);
+      setIsSubmitting(false);
     }
   };
 
@@ -200,22 +196,33 @@ export function UploadProofModal({ isOpen, onClose, dareTitle, onUploadProof }: 
     <Modal isOpen={isOpen} onClose={onClose} title={`Submit proof for "${dareTitle}"`}>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="proof-file" className="block text-brown font-rye mb-2">
-            Select your proof (image/video)
+          <div className="mb-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+            <div className="flex items-start space-x-2">
+              <svg className="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+              </svg>
+              <div className="text-sm">
+                <p className="font-medium text-blue-900 dark:text-blue-100 mb-1">Submit Proof Post</p>
+                <p className="text-blue-700 dark:text-blue-300">Create a post on Farcaster (warpcast.com) or Base app showing you completed the challenge, then paste the URL below.</p>
+              </div>
+            </div>
+          </div>
+
+          <label htmlFor="proof-url" className="block text-brown font-rye mb-2">
+            Farcaster/Base Post URL
           </label>
           <input
-            id="proof-file"
-            type="file"
-            accept="image/*,video/*"
-            onChange={handleFileChange}
+            id="proof-url"
+            type="url"
+            value={postUrl}
+            onChange={(e) => setPostUrl(e.target.value)}
             className="w-full p-2 border border-brown rounded bg-white text-brown font-special-elite min-h-11"
+            placeholder="https://warpcast.com/username/0x..."
             required
           />
-          {file && (
-            <p className="text-sm text-brown mt-1">
-              Selected file: {file.name}
-            </p>
-          )}
+          <p className="text-xs text-brown mt-1 opacity-75">
+            Example: https://warpcast.com/username/0x123456789... or Base app transaction URL
+          </p>
         </div>
 
         <div className="flex gap-2 pt-4">
@@ -228,10 +235,10 @@ export function UploadProofModal({ isOpen, onClose, dareTitle, onUploadProof }: 
           </button>
           <button
             type="submit"
-            disabled={isUploading || !file}
+            disabled={isSubmitting || !postUrl.trim()}
             className="flex-1 bg-gold hover:bg-yellow-600 disabled:bg-gray-400 text-brown font-rye px-4 py-2 rounded-lg transition-colors min-h-11"
           >
-            {isUploading ? 'Sending...' : 'Send'}
+            {isSubmitting ? 'Submitting...' : 'Submit Proof'}
           </button>
         </div>
       </form>

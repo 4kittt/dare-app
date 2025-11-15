@@ -1,59 +1,67 @@
 import type { Metadata } from "next";
-import { Inter, Source_Code_Pro } from "next/font/google";
-import { SafeArea } from "@coinbase/onchainkit/minikit";
-import { minikitConfig } from "../minikit.config";
+import { Inter } from "next/font/google";
 import { RootProvider } from "./rootProvider";
-import { Toaster } from "sonner";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
-export async function generateMetadata(): Promise<Metadata> {
-  return {
-    title: minikitConfig.miniapp.name,
-    description: minikitConfig.miniapp.description,
-    other: {
-      "fc:frame": JSON.stringify({
-        version: minikitConfig.miniapp.version,
-        imageUrl: minikitConfig.miniapp.heroImageUrl,
-        button: {
-          title: `Join the ${minikitConfig.miniapp.name} Waitlist`,
-          action: {
-            name: `Launch ${minikitConfig.miniapp.name}`,
-            type: "launch_frame",
-          },
-        },
-      }),
-    },
-  };
-}
+const inter = Inter({ subsets: ["latin"] });
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
-
-const sourceCodePro = Source_Code_Pro({
-  variable: "--font-source-code-pro",
-  subsets: ["latin"],
-});
+export const metadata: Metadata = {
+  title: "DareUp - Community Challenges",
+  description: "Accept community challenges, submit proofs, and win ETH rewards on Farcaster.",
+  viewport: "width=device-width, initial-scale=1",
+  other: {
+    "color-scheme": "light dark",
+    "supported-color-schemes": "light dark",
+  },
+};
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <RootProvider>
-      <html lang="en">
-        <head>
-          <link rel="manifest" href="/manifest.json" />
-        </head>
-        <body className={`${inter.variable} ${sourceCodePro.variable}`}>
-          <SafeArea>{children}</SafeArea>
-          <Toaster />
-          <SpeedInsights />
-        </body>
-      </html>
-    </RootProvider>
+    <html lang="en" className="h-full">
+      <body className={`${inter.className} h-full`}>
+        <RootProvider>
+          {children}
+        </RootProvider>
+
+        {/* Global Privacy Notice */}
+        <footer className="mt-auto pt-4 pb-safe border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
+          <div className="text-center text-xs text-gray-500 dark:text-gray-400 px-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <span>🔒 Blockchain wallet authentication only. No personal data collected.</span>
+              <a
+                href="/privacy"
+                className="text-primary hover:text-primary/80 underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Privacy Policy
+              </a>
+            </div>
+          </div>
+          <div className="mt-2 flex justify-center gap-4 text-sm">
+            <a
+              href="https://warpcast.com/4kittt"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-500 dark:text-gray-400 hover:text-primary"
+            >
+              Farcaster
+            </a>
+            <a
+              href="https://x.com/4kittt"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-500 dark:text-gray-400 hover:text-primary"
+            >
+              X
+            </a>
+          </div>
+        </footer>
+      </body>
+    </html>
   );
 }

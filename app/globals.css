@@ -1,10 +1,30 @@
-@import url('https://fonts.googleapis.com/css2?family=Rye&family=Special+Elite&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 @import "tailwindcss";
 
 @layer base {
   :root {
-    --background: #f4f1e8;
-    --foreground: #8b4513;
+    /* Primary colors - Base palette */
+    --primary: 255 92 0; /* Base orange */
+    --primary-light: 255 120 32; /* Lighter orange */
+    --primary-dark: 230 84 0; /* Darker orange */
+
+    /* Background colors */
+    --background-light: 250 250 250; /* Light background */
+    --background-dark: 17 24 39; /* Dark background */
+
+    /* Semantic grays */
+    --gray-50: 249 250 251;
+    --gray-100: 243 244 246;
+    --gray-200: 229 231 235;
+    --gray-300: 209 213 219;
+    --gray-400: 156 163 175;
+    --gray-500: 107 114 128;
+    --gray-600: 75 85 99;
+    --gray-700: 55 65 81;
+    --gray-800: 31 41 55;
+    --gray-900: 17 24 39;
+    --gray-950: 3 7 18;
   }
 
   html,
@@ -14,9 +34,8 @@
   }
 
   body {
-    color: var(--foreground);
-    background: var(--background);
-    font-family: 'Special Elite', monospace;
+    background: hsl(var(--background-light));
+    font-family: 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -51,6 +70,10 @@
   @media (prefers-color-scheme: dark) {
     html {
       color-scheme: dark;
+    }
+
+    body {
+      background: hsl(var(--background-dark));
     }
   }
 }
