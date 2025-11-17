@@ -98,7 +98,7 @@ const quizQuestions: QuizQuestion[] = [
 export default function Home() {
   const { isFrameReady, setFrameReady, context } = useMiniKit();
   const { viewCast: _viewCast } = useViewCast();
-  const [currentStep, setCurrentStep] = useState<'welcome' | 'quiz' | 'results'>('welcome');
+  const [currentStep, setCurrentStep] = useState<'welcome' | 'track-select' | 'quiz' | 'results'>('welcome');
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [userAnswers, setUserAnswers] = useState<{[key: string]: number}>({});
   const [userScores, setUserScores] = useState<UserScore[]>([]);
@@ -118,6 +118,13 @@ export default function Home() {
       setShowOnboarding(true);
     }
   }, [context?.user]);
+
+  // Redirect to track selection after wallet connect
+  useEffect(() => {
+    if (context?.user && !showOnboarding && currentStep === 'welcome') {
+      setCurrentStep('track-select');
+    }
+  }, [context?.user, showOnboarding, currentStep]);
 
   const handleStartQuiz = () => {
     setCurrentStep('quiz');
@@ -307,6 +314,76 @@ export default function Home() {
               >
                 Start Quiz
               </button>
+            </div>
+          ) : currentStep === 'track-select' ? (
+            <div className="space-y-6">
+              <div className="text-center">
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+                  What brings you to DareUp?
+                </h2>
+                <p className="text-gray-600 dark:text-gray-400 text-sm mb-8">
+                  Choose your path to find compatible crypto enthusiasts
+                </p>
+              </div>
+
+              <div className="space-y-4">
+<button
+                  onClick={() => setCurrentStep('quiz')}
+                  className="w-full p-6 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-xl transition-all duration-200 transform hover:scale-105"
+                >
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                      </svg>
+                    </div>
+                    <div className="text-left">
+                      <h3 className="font-bold text-lg">💻 Build</h3>
+                      <p className="text-sm opacity-90">Find developers and creators for collaborations</p>
+                    </div>
+                  </div>
+                </button>
+
+                <button
+                  onClick={() => setCurrentStep('quiz')}
+                  className="w-full p-6 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white rounded-xl transition-all duration-200 transform hover:scale-105"
+                >
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                      </svg>
+                    </div>
+                    <div className="text-left">
+                      <h3 className="font-bold text-lg">🤝 Connect</h3>
+                      <p className="text-sm opacity-90">Find friends and social connections in web3</p>
+                    </div>
+                  </div>
+                </button>
+
+                <button
+                  onClick={() => setCurrentStep('quiz')}
+                  className="w-full p-6 bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white rounded-xl transition-all duration-200 transform hover:scale-105"
+                >
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                      </svg>
+                    </div>
+                    <div className="text-left">
+                      <h3 className="font-bold text-lg">💕 Date</h3>
+                      <p className="text-sm opacity-90">Find meaningful romantic connections in web3</p>
+                    </div>
+                  </div>
+                </button>
+              </div>
+
+              <div className="text-center mt-8">
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  Your selection helps us match you with compatible people who share your goals
+                </p>
+              </div>
             </div>
           ) : currentStep === 'quiz' ? (
             <div>
