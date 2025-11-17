@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useMiniKit, useViewCast } from "@coinbase/onchainkit/minikit";
 import { Wallet } from "./components/Wallet";
+import { PersonalityRadar } from "./components/PersonalityRadar";
 
 interface QuizQuestion {
   id: string;
@@ -238,7 +239,7 @@ export default function Home() {
               DareUp
             </h1>
             <p className="text-gray-600 dark:text-gray-400 text-sm">
-              Community challenges on Farcaster
+              Web3 Personality Quiz & Social Matching
             </p>
           </header>
 
@@ -352,44 +353,58 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* Radar Chart Placeholder - Simple visualization for now */}
+              {/* Personality Radar Chart */}
               <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
-                  Ta toile d'araignée
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6 text-center">
+                  Your Personality Web
                 </h3>
-                <div className="space-y-4">
-                  {userScores.map((score, index) => (
-                    <div key={score.category} className="flex items-center">
-                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300 w-24">
-                        {score.category}
-                      </span>
-                      <div className="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-3 mx-3">
-                        <div
-                          className="bg-primary h-3 rounded-full transition-all duration-500"
-                          style={{ width: `${score.score}%` }}
-                        ></div>
-                      </div>
-                      <span className="text-sm font-bold text-gray-900 dark:text-gray-100 w-12 text-right">
-                        {score.score}%
-                      </span>
-                    </div>
-                  ))}
-                </div>
+                <PersonalityRadar scores={userScores} />
               </div>
 
-              <div className="space-y-4">
+              {/* Social Gating CTA Section */}
+              <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border border-purple-200 dark:border-purple-700 rounded-lg p-6 space-y-4">
+                <div className="text-center">
+                  <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                    🏆 Mint Your Web3 Personality Badge
+                  </h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                    Unlock access to meet compatible crypto builders
+                  </p>
+
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-center gap-2 text-sm">
+                      <span className="text-primary">✨</span>
+                      <span className="text-gray-700 dark:text-gray-300">Discover 13+ compatible profiles</span>
+                    </div>
+                    <div className="flex items-center justify-center gap-2 text-sm">
+                      <span className="text-primary">💫</span>
+                      <span className="text-gray-700 dark:text-gray-300">Access the matching experience</span>
+                    </div>
+                    <div className="flex items-center justify-center gap-2 text-sm">
+                      <span className="text-primary">🤝</span>
+                      <span className="text-gray-700 dark:text-gray-300">Connect with like-minded creators</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-center gap-2 mb-4">
+                  <div className="bg-primary/10 rounded-full px-4 py-2">
+                    <span className="text-primary font-semibold">13 potential matches waiting for you 🎯</span>
+                  </div>
+                </div>
+
                 <button
                   onClick={() => alert('Mint de ton badge NFT en développement !')}
-                  className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 rounded-lg min-h-12 font-medium transition-colors text-lg"
+                  className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 rounded-lg min-h-12 font-medium transition-all duration-300 text-lg shadow-lg"
                 >
-                  🏆 Mint mon badge NFT
+                  🏅 Mint Match Badge & Unlock
                 </button>
 
                 <button
                   onClick={handleRestartQuiz}
-                  className="w-full bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg min-h-12 font-medium transition-colors"
+                  className="w-full bg-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-lg min-h-12 font-medium transition-colors"
                 >
-                  Refaire le quiz
+                  Retake Quiz
                 </button>
               </div>
             </div>
