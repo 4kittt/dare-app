@@ -98,7 +98,7 @@ const quizQuestions: QuizQuestion[] = [
 export default function Home() {
   const { isFrameReady, setFrameReady, context } = useMiniKit();
   const { viewCast: _viewCast } = useViewCast();
-  const [currentStep, setCurrentStep] = useState<'welcome' | 'track-select' | 'quiz' | 'results'>('welcome');
+  const [currentStep, setCurrentStep] = useState<'landing' | 'track-select' | 'quiz' | 'results'>('landing');
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [userAnswers, setUserAnswers] = useState<{[key: string]: number}>({});
   const [userScores, setUserScores] = useState<UserScore[]>([]);
@@ -121,7 +121,7 @@ export default function Home() {
 
   // Redirect to track selection after wallet connect
   useEffect(() => {
-    if (context?.user && !showOnboarding && currentStep === 'welcome') {
+    if (context?.user && !showOnboarding && currentStep === 'landing') {
       setCurrentStep('track-select');
     }
   }, [context?.user, showOnboarding, currentStep]);
@@ -168,7 +168,7 @@ export default function Home() {
   };
 
   const handleRestartQuiz = () => {
-    setCurrentStep('welcome');
+    setCurrentStep('landing');
     setCurrentQuestion(0);
     setUserAnswers({});
     setUserScores([]);
@@ -273,7 +273,84 @@ export default function Home() {
 
         {/* Content */}
         <div className="flex-1 pb-24">
-          {currentStep === 'welcome' ? (
+          {currentStep === 'landing' ? (
+            <div className="flex flex-col items-center justify-center min-h-[calc(100vh-200px)] text-center px-6">
+              {/* Main Hero Section */}
+              <div className="mb-12">
+                {/* Logo/Icon with gradient background */}
+                <div className="w-24 h-24 bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl">
+                  <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+
+                {/* Main headline */}
+                <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                  Find Your
+                  <br />
+                  Crypto Soulmate
+                </h1>
+
+                {/* Subheadline */}
+                <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+                  Discover compatible crypto creators, builders, and dreamers through personality matching
+                </p>
+              </div>
+
+              {/* Feature highlights */}
+              <div className="grid grid-cols-1 gap-4 mb-12 max-w-sm mx-auto w-full">
+                <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-700">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900 rounded-xl flex items-center justify-center">
+                      <span className="text-2xl">🧠</span>
+                    </div>
+                    <div className="text-left">
+                      <h3 className="font-semibold text-gray-900 dark:text-white">Personality First</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Deep compatibility matching</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-700">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-10 h-10 bg-pink-100 dark:bg-pink-900 rounded-xl flex items-center justify-center">
+                      <span className="text-2xl">💫</span>
+                    </div>
+                    <div className="text-left">
+                      <h3 className="font-semibold text-gray-900 dark:text-white">Web3 Native</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Crypto creators community</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-700">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-xl flex items-center justify-center">
+                      <span className="text-2xl">🏆</span>
+                    </div>
+                    <div className="text-left">
+                      <h3 className="font-semibold text-gray-900 dark:text-white">Real Connections</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Build, collaborate, connect</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* CTA Button */}
+              <button
+                onClick={() => setCurrentStep('track-select')}
+                className="w-full max-w-sm bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-4 px-8 rounded-2xl text-lg shadow-xl transform transition-all duration-200 hover:scale-105 mb-6"
+              >
+                Start Your Journey 🚀
+              </button>
+
+              {/* Trust indicators */}
+              <div className="text-xs text-gray-500 dark:text-gray-400">
+                <p>✨ Personalized matching • 🤝 Like-minded connections</p>
+                <p className="mt-1">🎯 Build your web3 network • 💎 Mint personality NFTs</p>
+              </div>
+            </div>
+          ) : currentStep === 'welcome' ? (
             <div className="text-center">
               <div className="mb-8">
                 <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -557,58 +634,56 @@ export default function Home() {
         </main>
 
         {/* Bottom Navigation Bar - Required by Base guidelines */}
-        <nav className="bottom-nav fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 shadow-lg">
-          <div className="grid grid-cols-3 px-2 py-2">
-            <button
-              onClick={() => setCurrentStep('welcome')}
-              className={`flex flex-col items-center justify-center py-3 px-4 rounded-lg transition-colors min-h-11 ${
-                currentStep === 'welcome'
-                  ? 'text-primary bg-primary/5'
-                  : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800'
-              }`}
-            >
-              <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span className="text-xs font-medium">Discover</span>
-            </button>
+        {currentStep !== 'landing' && (
+          <nav className="bottom-nav fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 shadow-lg">
+            <div className="grid grid-cols-3 px-2 py-2">
+              <button
+                onClick={() => setCurrentStep('landing')}
+                className={`flex flex-col items-center justify-center py-3 px-4 rounded-lg transition-colors min-h-11 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800`}
+              >
+                <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span className="text-xs font-medium">Home</span>
+              </button>
 
-            <button
-              onClick={() => currentStep !== 'quiz' && setCurrentStep('quiz')}
-              className={`flex flex-col items-center justify-center py-3 px-4 rounded-lg transition-colors min-h-11 ${
-                currentStep === 'quiz'
-                  ? 'text-primary bg-primary/5'
-                  : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800'
-              }`}
-            >
-              <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-              </svg>
-              <span className="text-xs font-medium">Take Quiz</span>
-            </button>
+              <button
+                onClick={() => currentStep !== 'quiz' && setCurrentStep('quiz')}
+                className={`flex flex-col items-center justify-center py-3 px-4 rounded-lg transition-colors min-h-11 ${
+                  currentStep === 'quiz'
+                    ? 'text-primary bg-primary/5'
+                    : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800'
+                }`}
+              >
+                <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                </svg>
+                <span className="text-xs font-medium">Take Quiz</span>
+              </button>
 
-            <button
-              onClick={() => {
-                if (currentStep !== 'results') {
-                  if (userAnswers && Object.keys(userAnswers).length > 0) {
-                    calculateScores();
-                    setCurrentStep('results');
+              <button
+                onClick={() => {
+                  if (currentStep !== 'results') {
+                    if (userAnswers && Object.keys(userAnswers).length > 0) {
+                      calculateScores();
+                      setCurrentStep('results');
+                    }
                   }
-                }
-              }}
-              className={`flex flex-col items-center justify-center py-3 px-4 rounded-lg transition-colors min-h-11 ${
-                currentStep === 'results'
-                  ? 'text-primary bg-primary/5'
-                  : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800'
-              }`}
-            >
-              <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-              </svg>
-              <span className="text-xs font-medium">My Matches</span>
-            </button>
-          </div>
-        </nav>
+                }}
+                className={`flex flex-col items-center justify-center py-3 px-4 rounded-lg transition-colors min-h-11 ${
+                  currentStep === 'results'
+                    ? 'text-primary bg-primary/5'
+                    : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800'
+                }`}
+              >
+                <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                <span className="text-xs font-medium">My Matches</span>
+              </button>
+            </div>
+          </nav>
+        )}
       </div>
     </div>
   );
