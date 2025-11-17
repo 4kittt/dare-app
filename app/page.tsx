@@ -406,6 +406,52 @@ export default function Home() {
                 >
                   Retake Quiz
                 </button>
+
+                {/* Mock Preview of Compatible Profiles */}
+                <div className="mt-6 pt-6 border-t border-purple-200 dark:border-purple-600">
+                  <h5 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-4 text-center">
+                    Preview of Compatible Creators 🔥
+                  </h5>
+
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3 p-3 bg-white/50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-600">
+                      <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center">
+                        <span className="text-white font-bold text-xs">A</span>
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-medium text-gray-900 dark:text-gray-100">@alice_dev</p>
+                        <p className="text-xs text-gray-600 dark:text-gray-400">89% match • DeFi Builder</p>
+                      </div>
+                      <span className="text-xs text-emerald-600 dark:text-emerald-400">👋 Available</span>
+                    </div>
+
+                    <div className="flex items-center gap-3 p-3 bg-white/50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-600">
+                      <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center">
+                        <span className="text-white font-bold text-xs">M</span>
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-medium text-gray-900 dark:text-gray-100">@mayan_artist</p>
+                        <p className="text-xs text-gray-600 dark:text-gray-400">82% match • NFT Creator</p>
+                      </div>
+                      <span className="text-xs text-emerald-600 dark:text-emerald-400">🎨 Artist</span>
+                    </div>
+
+                    <div className="flex items-center gap-3 p-3 bg-white/50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-600">
+                      <div className="w-10 h-10 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center">
+                        <span className="text-white font-bold text-xs">Z</span>
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-medium text-gray-900 dark:text-gray-100">@zebra_trader</p>
+                        <p className="text-xs text-gray-600 dark:text-gray-400">79% match • Crypto Trader</p>
+                      </div>
+                      <span className="text-xs text-emerald-600 dark:text-emerald-400">📈 Trader</span>
+                    </div>
+                  </div>
+
+                  <p className="text-xs text-gray-500 dark:text-gray-400 text-center mt-4">
+                    Mint your badge to unlock 10+ more profiles & messaging
+                  </p>
+                </div>
               </div>
             </div>
           )}
