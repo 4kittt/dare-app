@@ -21,49 +21,49 @@ const quizQuestions: QuizQuestion[] = [
   {
     id: '1',
     category: 'Mood',
-    text: 'Préfères-tu passer du temps seul ou en groupe ?',
+    text: 'Do you prefer spending time alone or in groups?',
     options: [
-      { text: 'Toujours seul(e)', points: 10 },
-      { text: 'Plutôt seul(e)', points: 30 },
-      { text: 'Équilibre parfait', points: 50 },
-      { text: 'Plutôt en groupe', points: 70 },
-      { text: 'Toujours en groupe', points: 90 }
+      { text: 'Always alone', points: 10 },
+      { text: 'Mostly alone', points: 30 },
+      { text: 'Perfect balance', points: 50 },
+      { text: 'Mostly in groups', points: 70 },
+      { text: 'Always in groups', points: 90 }
     ]
   },
   {
     id: '2',
     category: 'Mood',
-    text: 'Comment réagis-tu face à l\'imprévu ?',
+    text: 'How do you react to unexpected situations?',
     options: [
-      { text: 'Panique totale', points: 10 },
-      { text: 'Un peu stressé(e)', points: 30 },
-      { text: 'Ça dépend', points: 50 },
-      { text: 'Ça m\'amuse', points: 70 },
-      { text: 'J\'adore ça', points: 90 }
+      { text: 'Total panic', points: 10 },
+      { text: 'A bit stressed', points: 30 },
+      { text: 'It depends', points: 50 },
+      { text: 'It amuses me', points: 70 },
+      { text: 'I love it', points: 90 }
     ]
   },
   // Dev Skills
   {
     id: '3',
     category: 'Dev Skills',
-    text: 'As-tu déjà déployé une app ?',
+    text: 'Have you ever deployed an app?',
     options: [
-      { text: 'Qu\'est-ce que c\'est ?', points: 10 },
-      { text: 'J\'ai essayé une fois', points: 30 },
-      { text: 'Quelques fois', points: 50 },
-      { text: 'Souvent', points: 70 },
-      { text: 'Tous les jours', points: 90 }
+      { text: 'What\'s that?', points: 10 },
+      { text: 'I tried once', points: 30 },
+      { text: 'A few times', points: 50 },
+      { text: 'Often', points: 70 },
+      { text: 'Every day', points: 90 }
     ]
   },
   {
     id: '4',
     category: 'Dev Skills',
-    text: 'Quel est ton niveau en programmation ?',
+    text: 'What\'s your programming level?',
     options: [
-      { text: 'Débutant complet', points: 10 },
-      { text: 'Bases solides', points: 30 },
-      { text: 'Intermédiaire', points: 50 },
-      { text: 'Avancé', points: 70 },
+      { text: 'Total beginner', points: 10 },
+      { text: 'Solid basics', points: 30 },
+      { text: 'Intermediate', points: 50 },
+      { text: 'Advanced', points: 70 },
       { text: 'Expert', points: 90 }
     ]
   },
@@ -71,26 +71,26 @@ const quizQuestions: QuizQuestion[] = [
   {
     id: '5',
     category: 'Food Taste',
-    text: 'Manges-tu des sushis au petit-déjeuner ?',
+    text: 'Do you eat sushi for breakfast?',
     options: [
-      { text: 'Jamais de la vie !', points: 10 },
-      { text: 'Peut-être une fois', points: 30 },
-      { text: 'Pourquoi pas', points: 50 },
-      { text: 'J\'adore', points: 70 },
-      { text: 'Tous les matins', points: 90 }
+      { text: 'Never in my life!', points: 10 },
+      { text: 'Maybe once', points: 30 },
+      { text: 'Why not', points: 50 },
+      { text: 'I love it', points: 70 },
+      { text: 'Every morning', points: 90 }
     ]
   },
   // Fun/Weird
   {
     id: '6',
     category: 'Fun',
-    text: 'Serais-tu capable de porter des chaussettes avec des sandales ?',
+    text: 'Would you wear socks with sandals?',
     options: [
-      { text: 'Horreur absolue', points: 10 },
-      { text: 'Jamais en public', points: 30 },
-      { text: 'Pour rigoler', points: 50 },
-      { text: 'Sans problème', points: 70 },
-      { text: 'C\'est mon style', points: 90 }
+      { text: 'Absolutely horrifying', points: 10 },
+      { text: 'Never in public', points: 30 },
+      { text: 'For fun', points: 50 },
+      { text: 'No problem', points: 70 },
+      { text: 'That\'s my style', points: 90 }
     ]
   }
 ];
@@ -275,29 +275,29 @@ export default function Home() {
                   </svg>
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-                  Découvre ta vraie personnalité !
+                  Discover Your True Personality!
                 </h2>
                 <p className="text-gray-600 dark:text-gray-400 text-sm mb-8">
-                  Réponds à quelques questions fun pour créer ton profil unique et trouver des personnes compatibles
+                  Answer a few fun questions to create your unique profile and find compatible people
                 </p>
               </div>
 
               <div className="space-y-4 mb-8">
                 <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 text-left">
                   <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">🤔 Mood Matching</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Teste ton tempérament social</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Test your social temperament</p>
                 </div>
                 <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 text-left">
                   <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">💻 Dev Skills</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Évalue ton niveau technique</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Assess your technical level</p>
                 </div>
                 <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 text-left">
                   <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">🍜 Food Taste</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Préférences culinaires</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Culinary preferences</p>
                 </div>
                 <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 text-left">
                   <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">🎪 Questions Fun</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Questions loufoques et inattendues</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Weird and unexpected questions</p>
                 </div>
               </div>
 
@@ -305,7 +305,7 @@ export default function Home() {
                 onClick={handleStartQuiz}
                 className="w-full bg-primary text-white hover:bg-primary/90 rounded-lg min-h-12 font-medium transition-colors text-lg"
               >
-                Commencer le quiz
+                Start Quiz
               </button>
             </div>
           ) : currentStep === 'quiz' ? (
@@ -313,7 +313,7 @@ export default function Home() {
               <div className="mb-6">
                 <div className="flex justify-between items-center mb-4">
                   <span className="text-sm text-gray-500 dark:text-gray-400">
-                    Question {currentQuestion + 1} sur {quizQuestions.length}
+                    Question {currentQuestion + 1} of {quizQuestions.length}
                   </span>
                   <div className="w-32 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                     <div
@@ -367,10 +367,10 @@ export default function Home() {
                   </svg>
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-                  Félicitations !
+                  Congratulations!
                 </h2>
                 <p className="text-gray-600 dark:text-gray-400 text-sm mb-8">
-                  Voici ton profil de personnalité unique
+                  Here's your unique personality profile
                 </p>
               </div>
 
@@ -415,7 +415,7 @@ export default function Home() {
                 </div>
 
                 <button
-                  onClick={() => alert('Mint de ton badge NFT en développement !')}
+                  onClick={() => alert('Mint your Web3 Personality Badge - Coming Soon!')}
                   className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 rounded-lg min-h-12 font-medium transition-all duration-300 text-lg shadow-lg"
                 >
                   🏅 Mint Match Badge & Unlock
