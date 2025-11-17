@@ -1,7 +1,7 @@
 {
-  "name": "DARE",
-  "short_name": "DARE",
-  "description": "Community Challenges on Farcaster",
+  "name": "DareUp",
+  "short_name": "DareUp",
+  "description": "Personality Quiz & Social Matching on Farcaster",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

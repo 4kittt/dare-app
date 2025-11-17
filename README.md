@@ -1,6 +1,6 @@
-# Waitlist Mini App Quickstart
+# DareUp - Personality Quiz Mini App
 
-This is a demo Mini App application built using OnchainKit and the Farcaster SDK. Build a waitlist sign-up mini app for your company that can be published to the Base app and Farcaster. 
+This is a personality quiz mini app built with OnchainKit and the Farcaster SDK. Discover your unique personality traits through a fun multi-category quiz and find compatible profiles in the community. Features NFT badge minting for completed quizzes.
 
 > [!IMPORTANT]  
 > Before interacting with this demo, please review our [disclaimer](#disclaimer) — there are **no official tokens or apps** associated with Cubey, Base, or Coinbase.
