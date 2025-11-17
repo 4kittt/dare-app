@@ -67,6 +67,99 @@ export interface Database {
           votes?: number
         }
       }
+      profiles: {
+        Row: {
+          fid: string
+          username: string
+          display_name: string
+          pfp_url: string
+          track: 'Build' | 'Connect' | 'Date'
+          personality_scores: Record<string, number> // JSON object with categories as keys
+          minted: boolean
+          minted_at: string | null
+          bio: string | null
+          tags: string[] // JSON array
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          fid: string
+          username: string
+          display_name: string
+          pfp_url: string
+          track: 'Build' | 'Connect' | 'Date'
+          personality_scores: Record<string, number>
+          minted?: boolean
+          minted_at?: string | null
+          bio?: string | null
+          tags?: string[]
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          fid?: string
+          username?: string
+          display_name?: string
+          pfp_url?: string
+          track?: 'Build' | 'Connect' | 'Date'
+          personality_scores?: Record<string, number>
+          minted?: boolean
+          minted_at?: string | null
+          bio?: string | null
+          tags?: string[]
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      swipes: {
+        Row: {
+          id: string
+          from_fid: string
+          to_fid: string
+          action: 'like' | 'pass' | 'superlike'
+          timestamp: string
+        }
+        Insert: {
+          id?: string
+          from_fid: string
+          to_fid: string
+          action: 'like' | 'pass' | 'superlike'
+          timestamp?: string
+        }
+        Update: {
+          id?: string
+          from_fid?: string
+          to_fid?: string
+          action?: 'like' | 'pass' | 'superlike'
+          timestamp?: string
+        }
+      }
+      matches: {
+        Row: {
+          id: string
+          participant1: string // FID
+          participant2: string // FID
+          track: 'Build' | 'Connect' | 'Date'
+          created_at: string
+          last_message_at: string | null
+        }
+        Insert: {
+          id?: string
+          participant1: string
+          participant2: string
+          track: 'Build' | 'Connect' | 'Date'
+          created_at?: string
+          last_message_at?: string | null
+        }
+        Update: {
+          id?: string
+          participant1?: string
+          participant2?: string
+          track?: 'Build' | 'Connect' | 'Date'
+          created_at?: string
+          last_message_at?: string | null
+        }
+      }
     }
   }
 }

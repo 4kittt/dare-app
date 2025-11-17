@@ -1,21 +1,17 @@
 {
-  "name": "DareUp",
-  "short_name": "DareUp",
-  "description": "Personality Quiz & Social Matching on Farcaster",
+  "name": "DareUP",
+  "short_name": "DareUP",
+  "description": "Personality Quiz & Social Matching - Dare to Meet!",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#ff5c00",
+  "background_color": "#C084FC",
+  "theme_color": "#9333EA",
   "icons": [
     {
-      "src": "/blue-icon.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "/blue-icon.png",
-      "sizes": "512x512",
-      "type": "image/png"
+      "src": "/icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
