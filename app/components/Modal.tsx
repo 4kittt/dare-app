@@ -75,33 +75,6 @@ export function CreateDareModal({ isOpen, onClose, onCreateDare }: CreateDareMod
     setIsSubmitting(true);
     try {
       const castText = `dare: ${title} - ${description} for ${reward} prize! ${tags.trim()}`;
-      const mentions: { fid: number }[] = [];
-
-      if (tags.trim()) {
-        const usernames = tags.split(',').map(s => s.trim()).filter(s => s.startsWith('@'));
-        for (const userTag of usernames) {
-          const username = userTag.slice(1);
-          try {
-            const response = await fetch(`https://api.neynar.com/v2/farcaster/user/search?q=${username}`, {
-              headers: {
-                'accept': 'application/json',
-                'x-api-key': process.env.NEXT_PUBLIC_NEYNAR_API_KEY as string,
-              },
-            });
-            if (response.ok) {
-              const data = await response.json();
-              if (data.result && data.result.users.length > 0) {
-                const user = data.result.users.find((u: { username: string; fid: number }) => u.username === username);
-                if (user) {
-                  mentions.push({ fid: user.fid });
-                }
-              }
-            }
-          } catch (e) {
-            console.log('Error resolving mention', username, e);
-          }
-        }
-      }
 
       composeCast({ text: castText });
       onCreateDare({ title: title.trim(), description: description.trim(), reward: reward.trim() });
@@ -160,7 +133,7 @@ export function CreateDareModal({ isOpen, onClose, onCreateDare }: CreateDareMod
             value={reward}
             onChange={(e) => setReward(e.target.value)}
             className="w-full p-2 border border-brown rounded bg-white text-gray-900 font-special-elite min-h-11"
-            placeholder="Ex: 0.01 ETH"
+            placeholder="Ex: 1 USDC"
             required
           />
         </div>
