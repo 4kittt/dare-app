@@ -233,6 +233,27 @@ export default function Home() {
       )}
 
       <div className="flex flex-col min-h-screen">
+        {/* User Profile Header */}
+        {context?.user && (
+          <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3">
+            <div className="flex items-center gap-3 max-w-md mx-auto">
+              <img
+                src={context.user.pfpUrl}
+                alt={context.user.username}
+                className="w-10 h-10 rounded-full"
+              />
+              <div>
+                <p className="font-medium text-gray-900 dark:text-gray-100">
+                  @{context.user.username}
+                </p>
+                <p className="text-xs text-gray-600 dark:text-gray-400">
+                  {context.user.displayName}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
         <main className="flex-1 px-4 py-6 max-w-md mx-auto w-full">
           <header className="text-center mb-6">
             <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-1">
@@ -413,38 +434,38 @@ export default function Home() {
                     Preview of Compatible Creators 🔥
                   </h5>
 
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-3 p-3 bg-white/50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-600">
-                      <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center">
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
                         <span className="text-white font-bold text-xs">A</span>
                       </div>
                       <div className="flex-1">
                         <p className="font-medium text-gray-900 dark:text-gray-100">@alice_dev</p>
-                        <p className="text-xs text-gray-600 dark:text-gray-400">89% match • DeFi Builder</p>
+                        <p className="text-xs text-gray-600 dark:text-gray-400">89% • DeFi Builder</p>
                       </div>
-                      <span className="text-xs text-emerald-600 dark:text-emerald-400">👋 Available</span>
+                      <span className="text-xs text-green-600">💫</span>
                     </div>
 
-                    <div className="flex items-center gap-3 p-3 bg-white/50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-600">
-                      <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center">
+                    <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
                         <span className="text-white font-bold text-xs">M</span>
                       </div>
                       <div className="flex-1">
                         <p className="font-medium text-gray-900 dark:text-gray-100">@mayan_artist</p>
-                        <p className="text-xs text-gray-600 dark:text-gray-400">82% match • NFT Creator</p>
+                        <p className="text-xs text-gray-600 dark:text-gray-400">82% • NFT Creator</p>
                       </div>
-                      <span className="text-xs text-emerald-600 dark:text-emerald-400">🎨 Artist</span>
+                      <span className="text-xs text-green-600">🎨</span>
                     </div>
 
-                    <div className="flex items-center gap-3 p-3 bg-white/50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-600">
-                      <div className="w-10 h-10 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center">
-                        <span className="text-white font-bold text-xs">Z</span>
+                    <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center">
+                        <span className="text-xs">🤝</span>
                       </div>
                       <div className="flex-1">
-                        <p className="font-medium text-gray-900 dark:text-gray-100">@zebra_trader</p>
-                        <p className="text-xs text-gray-600 dark:text-gray-400">79% match • Crypto Trader</p>
+                        <p className="font-medium text-gray-900 dark:text-gray-100">@crypto_soul</p>
+                        <p className="text-xs text-gray-600 dark:text-gray-400">76% • Community Builder</p>
                       </div>
-                      <span className="text-xs text-emerald-600 dark:text-emerald-400">📈 Trader</span>
+                      <span className="text-xs text-green-600">🔗</span>
                     </div>
                   </div>
 
@@ -457,6 +478,60 @@ export default function Home() {
           )}
         </div>
         </main>
+
+        {/* Bottom Navigation Bar - Required by Base guidelines */}
+        <nav className="bottom-nav fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 shadow-lg">
+          <div className="grid grid-cols-3 px-2 py-2">
+            <button
+              onClick={() => setCurrentStep('welcome')}
+              className={`flex flex-col items-center justify-center py-3 px-4 rounded-lg transition-colors min-h-11 ${
+                currentStep === 'welcome'
+                  ? 'text-primary bg-primary/5'
+                  : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800'
+              }`}
+            >
+              <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span className="text-xs font-medium">Discover</span>
+            </button>
+
+            <button
+              onClick={() => currentStep !== 'quiz' && setCurrentStep('quiz')}
+              className={`flex flex-col items-center justify-center py-3 px-4 rounded-lg transition-colors min-h-11 ${
+                currentStep === 'quiz'
+                  ? 'text-primary bg-primary/5'
+                  : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800'
+              }`}
+            >
+              <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+              </svg>
+              <span className="text-xs font-medium">Take Quiz</span>
+            </button>
+
+            <button
+              onClick={() => {
+                if (currentStep !== 'results') {
+                  if (userAnswers && Object.keys(userAnswers).length > 0) {
+                    calculateScores();
+                    setCurrentStep('results');
+                  }
+                }
+              }}
+              className={`flex flex-col items-center justify-center py-3 px-4 rounded-lg transition-colors min-h-11 ${
+                currentStep === 'results'
+                  ? 'text-primary bg-primary/5'
+                  : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800'
+              }`}
+            >
+              <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              <span className="text-xs font-medium">My Matches</span>
+            </button>
+          </div>
+        </nav>
       </div>
     </div>
   );

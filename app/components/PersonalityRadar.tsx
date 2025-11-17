@@ -1,5 +1,4 @@
 "use client";
-import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer } from 'recharts';
 
 interface PersonalityRadarProps {
   scores: {
@@ -9,46 +8,49 @@ interface PersonalityRadarProps {
 }
 
 export function PersonalityRadar({ scores }: PersonalityRadarProps) {
-  // Prepare data for Recharts radar chart
-  const data = scores.map(score => ({
-    category: score.category,
-    value: score.score,
-  }));
-
-  // Colors for different personality categories
-  const colors = {
-    'Mood': '#3b82f6', // Blue
-    'Dev Skills': '#10b981', // Green
-    'Food Taste': '#f59e0b', // Orange
-    'Fun': '#8b5cf6', // Purple
-  };
-
+  // Simple radial progress bars for mobile mini-app performance
   return (
-    <div className="w-full max-w-sm mx-auto">
-      <ResponsiveContainer width="100%" height={300}>
-        <RadarChart data={data}>
-          <PolarGrid stroke="#374151" />
-          <PolarAngleAxis
-            dataKey="category"
-            tick={{ fill: '#9ca3af', fontSize: 12, fontWeight: 500 }}
-            className="text-xs"
-          />
-          <PolarRadiusAxis
-            tick={{ fill: '#6b7280', fontSize: 10 }}
-            tickCount={5}
-            domain={[0, 100]}
-          />
-          <Radar
-            name="Personality Score"
-            dataKey="value"
-            stroke={colors[data[0]?.category as keyof typeof colors] || '#3b82f6'}
-            fill={colors[data[0]?.category as keyof typeof colors] || '#3b82f6'}
-            fillOpacity={0.3}
-            strokeWidth={2}
-            dot={{ fill: colors[data[0]?.category as keyof typeof colors] || '#3b82f6', strokeWidth: 0, r: 4 }}
-          />
-        </RadarChart>
-      </ResponsiveContainer>
+    <div className="w-full max-w-sm mx-auto space-y-4">
+      {scores.map((score, index) => {
+        // Colors for different personality categories
+        const colors = [
+          'bg-blue-500', // Mood
+          'bg-green-500', // Dev Skills
+          'bg-orange-500', // Food Taste
+          'bg-purple-500', // Fun
+        ];
+
+        const colorClass = colors[index] || 'bg-gray-500';
+
+        return (
+          <div key={score.category} className="space-y-2">
+            <div className="flex justify-between items-center">
+              <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                {score.category}
+              </span>
+              <span className="text-sm font-bold text-gray-900 dark:text-gray-100">
+                {score.score}%
+              </span>
+            </div>
+            <div className="relative">
+              {/* Background bar */}
+              <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                {/* Progress bar */}
+                <div
+                  className={`h-full ${colorClass} transition-all duration-1000 ease-out rounded-full`}
+                  style={{ width: `${score.score}%` }}
+                />
+              </div>
+            </div>
+          </div>
+        );
+      })}
+
+      {/* Simple center dot for "radar" aesthetic */}
+      <div className="relative flex items-center justify-center mt-6">
+        <div className="absolute w-24 h-24 rounded-full bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-pink-500/20"></div>
+        <div className="relative w-6 h-6 rounded-full bg-primary"></div>
+      </div>
     </div>
   );
 }
