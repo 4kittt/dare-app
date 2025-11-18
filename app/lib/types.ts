@@ -1,7 +1,7 @@
-// Core types for DareUp personality matching
+// Core types for DareUp personality matching - Updated for OnchainKit four pillars
 
 export interface PersonalityScore {
-  category: 'Mood' | 'Dev Skills' | 'Food Taste' | 'Fun'
+  category: 'Vision & Values' | 'Building & Work Style' | 'Chaos & Risk Tolerance' | 'Connection & Social Style'
   score: number // 0-100
 }
 

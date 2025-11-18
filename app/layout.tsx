@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { RootProvider } from "./rootProvider";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "DareUp - Community Challenges",
-  description: "Accept community challenges, submit proofs, and win ETH rewards on Farcaster.",
+  title: "DareUP - Dare to Meet",
+  description: "Personality quiz and social matching on Farcaster - Dare to find your perfect match!",
   viewport: "width=device-width, initial-scale=1",
   other: {
     "color-scheme": "light dark",
@@ -61,6 +62,7 @@ export default function RootLayout({
             </a>
           </div>
         </footer>
+        <SpeedInsights />
       </body>
     </html>
   );

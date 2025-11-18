@@ -8,19 +8,19 @@ interface PersonalityRadarProps {
 }
 
 export function PersonalityRadar({ scores }: PersonalityRadarProps) {
-  // Simple radial progress bars for mobile mini-app performance
+  // Four Pillars Personality Radar - OnchainKit Compatible
   return (
     <div className="w-full max-w-sm mx-auto space-y-4">
       {scores.map((score, index) => {
-        // Colors for different personality categories
-        const colors = [
-          'bg-blue-500', // Mood
-          'bg-green-500', // Dev Skills
-          'bg-orange-500', // Food Taste
-          'bg-purple-500', // Fun
+        // Colors for the four personality pillars (OnchainKit)
+        const pillarColors = [
+          'bg-purple-500', // Vision & Values (The "Why")
+          'bg-blue-500',   // Building & Work Style (The "How")
+          'bg-green-500',  // Chaos & Risk Tolerance (The "Risk")
+          'bg-pink-500',   // Connection & Social Style (The "Social")
         ];
 
-        const colorClass = colors[index] || 'bg-gray-500';
+        const colorClass = pillarColors[index] || 'bg-gray-500';
 
         return (
           <div key={score.category} className="space-y-2">

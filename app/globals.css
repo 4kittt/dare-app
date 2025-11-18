@@ -4,27 +4,31 @@
 
 @layer base {
   :root {
-    /* Primary colors - Base palette */
-    --primary: 255 92 0; /* Base orange */
-    --primary-light: 255 120 32; /* Lighter orange */
-    --primary-dark: 230 84 0; /* Darker orange */
+    /* Modern Glossy Palette - Purple/Pink Gradient */
+    --primary: 147 51 234; /* Purple-600 */
+    --primary-light: 168 85 247; /* Purple-500 */
+    --primary-dark: 124 58 237; /* Purple-700 */
 
-    /* Background colors */
-    --background-light: 250 250 250; /* Light background */
-    --background-dark: 17 24 39; /* Dark background */
+    /* Accent colors */
+    --accent: 236 72 153; /* Pink-500 */
+    --accent-light: 249 168 212; /* Pink-300 */
 
-    /* Semantic grays */
-    --gray-50: 249 250 251;
-    --gray-100: 243 244 246;
-    --gray-200: 229 231 235;
-    --gray-300: 209 213 219;
-    --gray-400: 156 163 175;
-    --gray-500: 107 114 128;
-    --gray-600: 75 85 99;
-    --gray-700: 55 65 81;
-    --gray-800: 31 41 55;
-    --gray-900: 17 24 39;
-    --gray-950: 3 7 18;
+    /* Background colors - Glossy dark theme */
+    --background-light: 17 24 39; /* Gray-900 */
+    --background-dark: 3 7 18; /* Gray-950 */
+
+    /* Semantic grays - with glossy hue */
+    --gray-50: 17 24 39;
+    --gray-100: 31 41 55;
+    --gray-200: 55 65 81;
+    --gray-300: 75 85 99;
+    --gray-400: 107 114 128;
+    --gray-500: 156 163 175;
+    --gray-600: 209 213 219;
+    --gray-700: 229 231 235;
+    --gray-800: 243 244 246;
+    --gray-900: 249 250 251;
+    --gray-950: 255 255 255;
   }
 
   html,

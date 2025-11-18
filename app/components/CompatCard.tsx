@@ -15,7 +15,7 @@ export function CompatCard({ card, onSwipe, isVisible }: CompatCardProps) {
   return (
     <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-xl overflow-hidden max-w-sm mx-auto">
       {/* Header with compatibility score - BIGGEST element */}
-      <div className="bg-gradient-to-r from-purple-500 to-pink-500 p-6 relative">
+      <div className="bg-linear-to-r from-purple-500 to-pink-500 p-6 relative">
         <div className="text-center">
           <div className="text-5xl font-bold text-white mb-1">
             {matchPercentage}%
@@ -50,9 +50,9 @@ export function CompatCard({ card, onSwipe, isVisible }: CompatCardProps) {
 
         {/* PoP NFT Profile - Second most prominent */}
         <div className="mb-4">
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg p-3 border border-blue-200 dark:border-blue-700">
+          <div className="bg-linear-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg p-3 border border-blue-200 dark:border-blue-700">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full flex items-center justify-center">
+              <div className="w-8 h-8 bg-linear-to-r from-blue-400 to-indigo-500 rounded-full flex items-center justify-center">
                 <span className="text-white text-xs font-bold">PoP</span>
               </div>
               <span className="font-semibold text-blue-900 dark:text-blue-100">
@@ -88,7 +88,7 @@ export function CompatCard({ card, onSwipe, isVisible }: CompatCardProps) {
           </button>
           <button
             onClick={() => onSwipe('like')}
-            className="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-0 rounded-xl min-h-12 font-semibold text-sm shadow-lg transition-all"
+            className="flex-1 bg-linear-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-0 rounded-xl min-h-12 font-semibold text-sm shadow-lg transition-all"
           >
             Connect 💫
           </button>

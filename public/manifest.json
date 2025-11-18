@@ -1,17 +1,20 @@
 {
   "name": "DareUP",
   "short_name": "DareUP",
-  "description": "Personality Quiz & Social Matching - Dare to Meet!",
+  "description": "Personality-Powered Web3 Matching. Connect with compatible builders and creators based on your Web3 personality type.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#C084FC",
-  "theme_color": "#9333EA",
+  "background_color": "#8B5CF6",
+  "theme_color": "#7C3AED",
+  "orientation": "portrait",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["social", "entertainment", "utilities"],
   "icons": [
     {
       "src": "/icon.png",
       "sizes": "1024x1024",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     }
   ]
 }

@@ -302,7 +302,7 @@ const quizQuestions: QuizQuestion[] = [
 export default function Home() {
   const { isFrameReady, setFrameReady, context } = useMiniKit();
   const { viewCast: _viewCast } = useViewCast();
-  const [currentStep, setCurrentStep] = useState<'landing' | 'track-select' | 'quiz' | 'results' | 'swipe' | 'profile'>('landing');
+  const [currentStep, setCurrentStep] = useState<'landing' | 'track-select' | 'quiz' | 'results' | 'swipe' | 'profile' | 'community'>('landing');
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [userVector, setUserVector] = useState<PersonalityVector>({
     vision: 0, risk: 0, style: 0, action: 0
@@ -490,7 +490,7 @@ export default function Home() {
               {/* Main Hero Section */}
               <div className="mb-12">
                 {/* Logo/Icon with gradient background */}
-                <div className="w-24 h-24 bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl">
+          <div className="w-24 h-24 bg-linear-to-br from-purple-500 via-pink-500 to-blue-500 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl">
                   <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
@@ -791,6 +791,141 @@ export default function Home() {
                 </div>
               </div>
             </div>
+          ) : currentStep === 'community' ? (
+            <div>
+              <div className="mb-6">
+                <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 text-center">
+                  🌟 Web3 Community Hub
+                </h2>
+                <p className="text-sm text-gray-600 dark:text-gray-400 text-center mt-2">
+                  Connect with the broader ecosystem
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                {/* Discord Links */}
+                <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">
+                    🎮 Official Communities
+                  </h3>
+
+                  <div className="space-y-3">
+                    <a
+                      href="https://discord.gg/cSMGfkCwxX"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-full p-4 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white rounded-lg transition-all duration-200 transform hover:scale-105"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                          <span className="text-xl">💬</span>
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-bold">Base Official Discord</h4>
+                          <p className="text-sm opacity-90">Join the largest Base community</p>
+                        </div>
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </div>
+                    </a>
+
+                    <a
+                      href="https://portal.cdp.coinbase.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-full p-4 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-lg transition-all duration-200 transform hover:scale-105"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                          <span className="text-xl">🌐</span>
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-bold">Base Portal</h4>
+                          <p className="text-sm opacity-90">Explore apps & tools on Base</p>
+                        </div>
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+
+                {/* Farcaster Channels */}
+                <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">
+                    🔥 Trending Farcaster Channels
+                  </h3>
+
+                  <div className="space-y-3">
+                    <a
+                      href="https://warpcast.com/~/channel/web3"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center">
+                          <span className="text-white font-bold text-xs">W3</span>
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-900 dark:text-gray-100">/web3</p>
+                          <p className="text-sm text-gray-600 dark:text-gray-400">152k followers</p>
+                        </div>
+                      </div>
+                      <span className="text-gray-400">→</span>
+                    </a>
+
+                    <a
+                      href="https://warpcast.com/~/channel/crypto"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
+                          <span className="text-white font-bold text-xs">🎯</span>
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-900 dark:text-gray-100">/crypto</p>
+                          <p className="text-sm text-gray-600 dark:text-gray-400">89k followers</p>
+                        </div>
+                      </div>
+                      <span className="text-gray-400">→</span>
+                    </a>
+
+                    <a
+                      href="https://warpcast.com/~/channel/base"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
+                          <span className="text-white font-bold text-xs">⚡</span>
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-900 dark:text-gray-100">/base</p>
+                          <p className="text-sm text-gray-600 dark:text-gray-400">34k followers</p>
+                        </div>
+                      </div>
+                      <span className="text-gray-400">→</span>
+                    </a>
+                  </div>
+
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-3 text-center">
+                    Discover active communities on Farcaster ✨
+                  </p>
+                </div>
+
+                <div className="text-center mt-6">
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    Join the Web3 ecosystem • Build connections • Create together
+                  </p>
+                </div>
+              </div>
+            </div>
           ) : (
             <div className="text-center">
               <div className="mb-8">
@@ -818,10 +953,10 @@ export default function Home() {
                   Your Personality Web
                 </h3>
                 <PersonalityRadar scores={[
-                  { category: 'Vision', score: Math.max(0, Math.min(100, ((userVector.vision + 10) / 20) * 100)) },
-                  { category: 'Risk', score: Math.max(0, Math.min(100, ((userVector.risk + 10) / 20) * 100)) },
-                  { category: 'Style', score: Math.max(0, Math.min(100, ((userVector.style + 10) / 20) * 100)) },
-                  { category: 'Action', score: Math.max(0, Math.min(100, ((userVector.action + 10) / 20) * 100)) }
+                  { category: 'Vision & Values', score: Math.max(0, Math.min(100, ((userVector.vision + 10) / 20) * 100)) },
+                  { category: 'Building & Work Style', score: Math.max(0, Math.min(100, ((userVector.action + 10) / 20) * 100)) },
+                  { category: 'Chaos & Risk Tolerance', score: Math.max(0, Math.min(100, ((userVector.risk + 10) / 20) * 100)) },
+                  { category: 'Connection & Social Style', score: Math.max(0, Math.min(100, ((userVector.style + 10) / 20) * 100)) }
                 ]} />
               </div>
 
@@ -931,13 +1066,13 @@ export default function Home() {
           <nav className="bottom-nav fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 shadow-lg">
             <div className="grid grid-cols-3 px-2 py-2">
               <button
-                onClick={() => setCurrentStep('landing')}
+                onClick={() => setCurrentStep('community')}
                 className={`flex flex-col items-center justify-center py-3 px-4 rounded-lg transition-colors min-h-11 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800`}
               >
                 <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
-                <span className="text-xs font-medium">Home</span>
+                <span className="text-xs font-medium">Community</span>
               </button>
 
               <button
