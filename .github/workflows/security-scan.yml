@@ -34,6 +34,8 @@ jobs:
   security-scan:
     name: Security Vulnerability Scan
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
     - name: Checkout repository
@@ -82,6 +84,8 @@ jobs:
   dependency-check:
     name: Dependency Vulnerability Check
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
     - name: Checkout repository
