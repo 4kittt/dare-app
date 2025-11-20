@@ -29,6 +29,9 @@
     "viem": "^2.31.6",
     "wagmi": "^2.16.3"
   },
+  "overrides": {
+    "glob": "^13.0.0"
+  },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@farcaster/quick-auth": "^0.0.7",
