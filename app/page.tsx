@@ -5,6 +5,7 @@ import { Wallet } from "./components/Wallet";
 import { PersonalityRadar } from "./components/PersonalityRadar";
 import { SwipeContainer } from "./components/SwipeContainer";
 import { CardSlider } from "./components/CardSlider";
+import { PersonalityFeedbackType } from "./lib/types";
 import { useMintPersonalityBadge } from "./lib/nft";
 import { CompatibilityCard } from "./lib/types";
 

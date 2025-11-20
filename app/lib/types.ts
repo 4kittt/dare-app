@@ -1,5 +1,9 @@
 // Core types for DareUp personality matching - Updated for OnchainKit four pillars
 
+export type PersonalityFeedbackType =
+  | 'interest'        // Right: Let's chat 🤝
+  | 'pass';           // Left: Pass ❌
+
 export interface PersonalityScore {
   category: 'Vision & Values' | 'Building & Work Style' | 'Chaos & Risk Tolerance' | 'Connection & Social Style' | 'Builder Score'
   score: number // 0-100
