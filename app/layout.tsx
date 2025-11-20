@@ -29,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="h-full">
+    <html lang="en" className={`h-full ${pressStart2P.variable}`}>
       <body className={`${inter.className} h-full retro-crt`}>
         <RootProvider>
           {children}
