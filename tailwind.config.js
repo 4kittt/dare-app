@@ -36,6 +36,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
+        pixel: ['var(--font-pixel)', 'Press_Start_2P', 'monospace'],
       },
       spacing: {
         18: '4.5rem', // Use 4px base units consistently

@@ -1,10 +1,17 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Press_Start_2P } from "next/font/google";
 import { RootProvider } from "./rootProvider";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
+// Performance optimization: Use Next.js font loader instead of @import
 const inter = Inter({ subsets: ["latin"] });
+const pressStart2P = Press_Start_2P({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-pixel",
+  display: "swap" // Prevents invisible text flash
+});
 
 export const metadata: Metadata = {
   title: "DareUP - Dare to Meet",
@@ -23,7 +30,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="h-full">
-      <body className={`${inter.className} h-full`}>
+      <body className={`${inter.className} h-full retro-crt`}>
         <RootProvider>
           {children}
         </RootProvider>

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '../../lib/supabase'
 import { CompatibilityCard, UserProfile, DatabaseProfile } from '../../lib/types'
+import { createPostMatchDare } from '../dares/route'
 
 // GET /api/matches/suggestions/[fid] - Get swipe suggestions
 export async function GET(request: NextRequest) {

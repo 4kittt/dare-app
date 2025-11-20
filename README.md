@@ -1,159 +1,287 @@
-# DareUp - Personality Quiz Mini App
+# 🔥 DareUp - DeFi Social Dating & NFT Personality Badges
 
-This is a personality quiz mini app built with OnchainKit and the Farcaster SDK. Discover your unique personality traits through a fun multi-category quiz and find compatible profiles in the community. Features NFT badge minting for completed quizzes.
+[![Security Scan](https://github.com/4kittt/dare-app/actions/workflows/security-scan.yml/badge.svg)](https://github.com/4kittt/dare-app/actions/workflows/security-scan.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat&logo=nextdotjs&logoColor=white)](https://nextjs.org/)
 
-> [!IMPORTANT]  
-> Before interacting with this demo, please review our [disclaimer](#disclaimer) — there are **no official tokens or apps** associated with Cubey, Base, or Coinbase.
+**Match compatible crypto creators with AI-powered personality insights and mint unique NFT badges on Base Sepolia.**
 
-## Prerequisites
+DareUp is a personality quiz mini-app built for Farcaster's Base ecosystem. Users take a 16-question personality assessment across four vectors (Vision, Risk, Style, Action), mint personalized NFT badges, and connect with compatible profiles through an AI-enhanced matching algorithm.
 
-Before getting started, make sure you have:
+## 🚀 Features
 
-* Base app account
-* A [Farcaster](https://farcaster.xyz/) account
-* [Vercel](https://vercel.com/) account for hosting the application
-* [Coinbase Developer Platform](https://portal.cdp.coinbase.com/) Client API Key
+- 🧠 **Personality Vector System**: Four-axis scoring (Vision/Vision, Risk, Style, Action)
+- 💎 **NFT Badge Minting**: Unique personality-based NFT badges on Base Sepolia
+- 🤖 **AI Compatibility Matching**: Vercel AI Gateway enhanced matching suggestions
+- 🎯 **Swipe Interface**: Tinder-like experience for crypto creators
+- 👥 **Farcaster Integration**: Native mini-app with Neynar SDK
+- 🔒 **Security First**: Comprehensive security scanning and audit-ready code
+- 🎨 **Western Theme**: Custom typography and western-inspired design
 
-## Getting Started
+## 📋 Prerequisites
 
-### 1. Clone this repository 
+- **Base Sepolia Wallet** with test ETH
+- **[Farcaster](https://farcaster.xyz/) account**
+- **[Vercel](https://vercel.com/) account** for hosting
+- **[Coinbase Developer Platform](https://portal.cdp.coinbase.com/) API key**
+- **[Neynar API key](https://neynar.com/)** for Farcaster integration
+- **[Supabase](https://supabase.com/)** account for database
+- **Node.js 18+** and **npm**
+
+## 🛠️ Quick Start
+
+### 1. Clone & Install
 
 ```bash
-git clone https://github.com/base/demos.git
-```
-
-### 2. Install dependencies:
-
-```bash
-cd demos/minikit/waitlist-mini-app-qs
+git clone https://github.com/4kittt/dare-app.git
+cd dare-app
 npm install
 ```
 
-### 3. Configure environment variables
-
-Create a `.env.local` file and add your environment variables:
+### 2. Environment Setup
 
 ```bash
-NEXT_PUBLIC_PROJECT_NAME="Your App Name"
-NEXT_PUBLIC_ONCHAINKIT_API_KEY=<Replace-WITH-YOUR-CDP-API-KEY>
-NEXT_PUBLIC_URL=
+cp .env.example .env.local
 ```
 
-### 4. Run locally:
+Edit `.env.local` with your API keys:
+
+```env
+# Required
+NEXT_PUBLIC_ONCHAINKIT_API_KEY=your_cdp_api_key
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+NEYNAR_API_KEY=your_neynar_api_key
+AI_GATEWAY_API_KEY=your_vercel_ai_gateway_api_key
+
+# For production
+NEXT_PUBLIC_URL=https://your-domain.com
+NEXT_PUBLIC_BASE_APP_ID=your_app_id
+```
+
+### 3. Database Setup
+
+Run the Supabase migrations or create tables manually:
+
+```sql
+-- Users/profiles table
+CREATE TABLE profiles (
+  fid bigint PRIMARY KEY,
+  username text UNIQUE,
+  display_name text,
+  pfp_url text,
+  personality_scores jsonb,
+  track text CHECK (track IN ('Build', 'Connect')),
+  minted boolean DEFAULT false,
+  minted_at timestamp,
+  created_at timestamp DEFAULT now()
+);
+```
+
+### 4. Local Development
 
 ```bash
 npm run dev
 ```
 
-## Customization
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### Update Manifest Configuration
-
-The `minikit.config.ts` file configures your manifest located at `app/.well-known/farcaster.json`.
-
-**Skip the `accountAssociation` object for now.**
-
-To personalize your app, change the `name`, `subtitle`, and `description` fields and add images to your `/public` folder. Then update their URLs in the file.
-
-## Deployment
-
-### 1. Deploy to Vercel
+### 5. Testing & Linting
 
 ```bash
-vercel --prod
+# Run security linting
+npm run lint
+
+# Run dependency vulnerability check
+npm audit
+
+# Type checking
+npm run build
 ```
 
-You should have a URL deployed to a domain similar to: `https://your-vercel-project-name.vercel.app/`
+## 🏗️ Architecture
 
-### 2. Update environment variables
+### Core Components
 
-Add your production URL to your local `.env` file:
+```
+dare-app/
+├── app/
+│   ├── api/               # Next.js API routes
+│   │   ├── ai-compatibility/  # AI matching endpoint
+│   │   ├── badge-data/        # NFT data queries
+│   │   ├── user-has-minted/   # Mint status checks
+│   │   └── profiles/          # User profile management
+│   ├── components/            # React components
+│   │   ├── PersonalityRadar.tsx   # Quiz visualization
+│   │   ├── SwipeContainer.tsx      # Matching interface
+│   │   └── Wallet.tsx             # OnchainKit integration
+│   ├── lib/
+│   │   ├── nft.ts             # NFT minting utilities
+│   │   ├── ai-matching.ts     # Compatibility algorithms
+│   │   ├── supabase.ts        # Database client
+│   │   └── types.ts           # TypeScript definitions
+│   └── page.tsx               # Main quiz flow
+├── contracts/             # Smart contracts
+│   ├── PersonalityBadge.sol  # ERC-721 contract
+│   └── PersonalityBadgeABI.ts # Contract interface
+├── .github/               # GitHub Actions & Dependabot
+└── wagmiConfig.ts         # Web3 configuration
+```
+
+### Key Technologies
+
+- **Frontend**: Next.js 16, React 19, TypeScript, Tailwind CSS
+- **Web3**: OnchainKit, Wagmi, Base Sepolia
+- **Social**: Farcaster SDK, Neynar API
+- **AI**: Vercel AI Gateway
+- **Database**: Supabase (PostgreSQL)
+- **Security**: ESLint security rules, Dependabot, CodeQL
+
+## 🚀 Deployment
+
+### Vercel Deployment
+
+1. **Deploy to Vercel**:
+   ```bash
+   npx vercel --prod
+   ```
+
+2. **Set Environment Variables**:
+   ```bash
+   # Using Vercel CLI or Dashboard
+   vercel env add NEXT_PUBLIC_ONCHAINKIT_API_KEY production
+   vercel env add AI_GATEWAY_API_KEY production
+   # ... add all other environment variables
+   ```
+
+3. **Farcaster Manifest**:
+   - Update `minikit.config.ts` with your domain
+   - Generate account association at [Farcaster Manifest tool](https://farcaster.xyz/~/developers/mini-apps/manifest)
+
+### Smart Contract Deployment
 
 ```bash
-NEXT_PUBLIC_PROJECT_NAME="Your App Name"
-NEXT_PUBLIC_ONCHAINKIT_API_KEY=<Replace-WITH-YOUR-CDP-API-KEY>
-NEXT_PUBLIC_URL=https://your-vercel-project-name.vercel.app/
+# Deploy to Base Sepolia
+npx hardhat run scripts/deploy.ts --network baseSepolia
 ```
 
-### 3. Upload environment variables to Vercel
+Update the contract address in `contracts/PersonalityBadgeABI.ts`.
 
-Add environment variables to your production environment:
+## 🔒 Security
 
-```bash
-vercel env add NEXT_PUBLIC_PROJECT_NAME production
-vercel env add NEXT_PUBLIC_ONCHAINKIT_API_KEY production
-vercel env add NEXT_PUBLIC_URL production
-```
+This project implements comprehensive security measures:
 
-## Account Association
+### Automated Security Scanning
+- **CodeQL Analysis**: Static code analysis for vulnerabilities
+- **ESLint Security Rules**: Security-focused linting rules
+- **Dependency Scanning**: npm audit for vulnerabilities
+- **Dependabot**: Automated dependency updates
 
-### 1. Sign Your Manifest
+### Manual Security Checks
+- Input validation on all API endpoints
+- Secure environment variable handling
+- TypeScript for type safety
+- Regular dependency audits
 
-1. Navigate to [Farcaster Manifest tool](https://farcaster.xyz/~/developers/mini-apps/manifest)
-2. Paste your domain in the form field (ex: your-vercel-project-name.vercel.app)
-3. Click the `Generate account association` button and follow the on-screen instructions for signing with your Farcaster wallet
-4. Copy the `accountAssociation` object
-
-### 2. Update Configuration
-
-Update your `minikit.config.ts` file to include the `accountAssociation` object:
-
-```ts
-export const minikitConfig = {
-    accountAssociation: {
-        "header": "your-header-here",
-        "payload": "your-payload-here",
-        "signature": "your-signature-here"
-    },
-    frame: {
-        // ... rest of your frame configuration
-    },
+### Security Headers (Recommended)
+```javascript
+// next.config.js
+{
+  headers: [
+    {
+      source: '/(.*)',
+      headers: [
+        { key: 'X-Frame-Options', value: 'DENY' },
+        { key: 'X-Content-Type-Options', value: 'nosniff' },
+        { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+        { key: 'Content-Security-Policy', value: "default-src 'self'" }
+      ]
+    }
+  ]
 }
 ```
 
-### 3. Deploy Updates
+## 🤝 API Reference
 
-```bash
-vercel --prod
+### AI Compatibility Endpoint
+```typescript
+POST /api/ai-compatibility
+// Calculate AI-enhanced compatibility scores
+
+Response:
+{
+  baseScore: number,           // Original algorithm score
+  aiEnhancedScore: number,     // AI-enhanced score
+  confidenceLevel: number,     // AI confidence (0-100)
+  analysis: {
+    personalityInsights: string[],
+    compatibilityFactors: Array<{
+      trait: string,
+      score: number,
+      reasoning: string
+    }>,
+    conversationStarters: string[]
+  }
+}
 ```
 
-## Testing and Publishing
+### NFT Minting Hook
+```typescript
+const { mintBadge, result, isPending, isConfirming } = useMintPersonalityBadge(
+  personalityType,  // User's personality type
+  visionScore,      // Vision vector (-10 to +10)
+  riskScore,        // Risk tolerance
+  styleScore,       // Social style
+  actionScore,      // Action orientation
+  track,           // "Build" | "Connect"
+  fid,             // Farcaster ID
+  username         // Farcaster username
+);
+```
 
-### 1. Preview Your App
+## 📈 Contributing
 
-Go to [base.dev/preview](https://base.dev/preview) to validate your app:
+1. **Fork the repository**
+2. **Create a feature branch**: `git checkout -b feature/amazing-feature`
+3. **Security-first development**:
+   ```bash
+   npm run lint    # Security & code quality
+   npm audit        # Dependency vulnerabilities
+   npm run build   # Type checking
+   ```
+4. **Commit**: `git commit -m 'Add amazing feature with security checks'`
+5. **Push**: `git push origin feature/amazing-feature`
+6. **Open Pull Request**
 
-1. Add your app URL to view the embeds and click the launch button to verify the app launches as expected
-2. Use the "Account association" tab to verify the association credentials were created correctly
-3. Use the "Metadata" tab to see the metadata added from the manifest and identify any missing fields
+### Security Requirements
+- All PRs must pass security scanning
+- No untested dependencies
+- Environment variables properly handled
+- Input validation on all user inputs
 
-### 2. Publish to Base App
+## 📄 License
 
-To publish your app, create a post in the Base app with your app's URL.
+**MIT License**
 
-## Learn More
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software...
 
-For detailed step-by-step instructions, see the [Create a Mini App tutorial](https://docs.base.org/docs/mini-apps/quickstart/create-new-miniapp/) in the Base documentation.
+## ⚠️ Disclaimer
 
+**This is a development project for educational purposes only.**
+
+- No official affiliation with Coinbase, Base, or Farcaster
+- Testnets only - no real economic value
+- Always audit smart contracts before mainnet deployment
+- DYOR on all security implications
+
+## 🔗 Links
+
+- **Live Demo**: [Coming Soon]
+- **Base Ecosystem**: [base.org](https://base.org)
+- **Farcaster**: [farcaster.xyz](https://farcaster.xyz)
+- **OnchainKit**: [docs.base.org](https://docs.base.org)
 
 ---
 
-## Disclaimer  
-
-This project is a **demo application** created by the **Base / Coinbase Developer Relations team** for **educational and demonstration purposes only**.  
-
-**There is no token, cryptocurrency, or investment product associated with Cubey, Base, or Coinbase.**  
-
-Any social media pages, tokens, or applications claiming to be affiliated with, endorsed by, or officially connected to Cubey, Base, or Coinbase are **unauthorized and fraudulent**.  
-
-We do **not** endorse or support any third-party tokens, apps, or projects using the Cubey name or branding.  
-
-> [!WARNING]
-> Do **not** purchase, trade, or interact with any tokens or applications claiming affiliation with Coinbase, Base, or Cubey.  
-> Coinbase and Base will never issue a token or ask you to connect your wallet for this demo.  
-
-For official Base developer resources, please visit:  
-- [https://base.org](https://base.org)  
-- [https://docs.base.org](https://docs.base.org)  
-
----
+**Built with ❤️ for the Base ecosystem**

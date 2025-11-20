@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '../../lib/supabase'
+import { createPostMatchDare } from '../dares/route'
 
 // POST /api/swipes - Handle swipe action and check for matches
 export async function POST(request: NextRequest) {
@@ -66,6 +67,14 @@ export async function POST(request: NextRequest) {
           .single()
 
         if (matchError) throw matchError
+
+        // Generate post-match dare for viral momentum
+        try {
+          await createPostMatchDare(newMatch.id, fromFid, toFid)
+        } catch (dareError) {
+          console.error('Failed to create post-match dare:', dareError)
+          // Don't throw - dare failure shouldn't break the match
+        }
 
         isMatch = true
         match = newMatch

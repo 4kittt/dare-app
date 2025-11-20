@@ -13,9 +13,9 @@ export function CompatCard({ card, onSwipe, isVisible }: CompatCardProps) {
   const { profile, matchPercentage, keyAlignmentTags, popNftProfile } = card;
 
   return (
-    <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-xl overflow-hidden max-w-sm mx-auto">
+    <div className="bg-black border border-white pixel-corner shadow-xl overflow-hidden max-w-sm mx-auto">
       {/* Header with compatibility score - BIGGEST element */}
-      <div className="bg-linear-to-r from-purple-500 to-pink-500 p-6 relative">
+      <div className="bg-primary p-6 relative">
         <div className="text-center">
           <div className="text-5xl font-bold text-white mb-1">
             {matchPercentage}%
@@ -39,10 +39,10 @@ export function CompatCard({ card, onSwipe, isVisible }: CompatCardProps) {
             className="w-16 h-16 rounded-full border-2 border-white shadow-lg"
           />
           <div className="flex-1">
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+            <h3 className="text-xl font-pixel uppercase text-white">
               @{profile.username}
             </h3>
-            <p className="text-gray-600 dark:text-gray-400 text-sm">
+            <p className="text-gray-400 text-sm">
               {profile.displayName}
             </p>
           </div>
@@ -50,12 +50,12 @@ export function CompatCard({ card, onSwipe, isVisible }: CompatCardProps) {
 
         {/* PoP NFT Profile - Second most prominent */}
         <div className="mb-4">
-          <div className="bg-linear-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg p-3 border border-blue-200 dark:border-blue-700">
+          <div className="bg-black pixel-corner p-3 border border-cyan-400">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-linear-to-r from-blue-400 to-indigo-500 rounded-full flex items-center justify-center">
-                <span className="text-white text-xs font-bold">PoP</span>
+              <div className="w-8 h-8 bg-primary pixel-border flex items-center justify-center">
+                <span className="text-white text-xs font-pixel uppercase">PoP</span>
               </div>
-              <span className="font-semibold text-blue-900 dark:text-blue-100">
+              <span className="font-semibold text-primary">
                 {popNftProfile}
               </span>
             </div>
@@ -69,7 +69,7 @@ export function CompatCard({ card, onSwipe, isVisible }: CompatCardProps) {
               {keyAlignmentTags.map((tag, index) => (
                 <span
                   key={index}
-                  className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full text-xs font-medium"
+                  className="bg-gray-800 text-gray-300 px-3 py-1 pixel-corner text-xs font-pixel uppercase"
                 >
                   {tag}
                 </span>
@@ -82,27 +82,27 @@ export function CompatCard({ card, onSwipe, isVisible }: CompatCardProps) {
         <div className="flex gap-3">
           <button
             onClick={() => onSwipe('pass')}
-            className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 border border-gray-300 rounded-xl min-h-12 font-semibold text-sm transition-colors"
+            className="flex-1 pixel-button bg-gray-800 text-white hover:translate-0 uppercase font-pixel"
           >
-            Pass ❌
+            pass ❌
           </button>
           <button
             onClick={() => onSwipe('like')}
-            className="flex-1 bg-linear-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-0 rounded-xl min-h-12 font-semibold text-sm shadow-lg transition-all"
+            className="flex-1 pixel-button bg-primary text-white hover:translate-0 uppercase font-pixel"
           >
-            Connect 💫
+            connect 💫
           </button>
         </div>
       </div>
 
       {/* Swipe indicators */}
-      <div className="absolute inset-0 pointer-events-none rounded-2xl border-4 border-transparent">
+      <div className="absolute inset-0 pointer-events-none border-4 border-transparent">
         {/* Like indicator (right) */}
-        <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold transform rotate-12 opacity-0 transition-opacity">
+        <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 pixel-corner text-sm font-bold font-pixel uppercase transform rotate-12 opacity-0 transition-opacity">
           LIKE
         </div>
         {/* Pass indicator (left) */}
-        <div className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold transform -rotate-12 opacity-0 transition-opacity">
+        <div className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 pixel-corner text-sm font-bold font-pixel uppercase transform -rotate-12 opacity-0 transition-opacity">
           PASS
         </div>
       </div>

@@ -12,15 +12,15 @@ export function PersonalityRadar({ scores }: PersonalityRadarProps) {
   return (
     <div className="w-full max-w-sm mx-auto space-y-4">
       {scores.map((score, index) => {
-        // Colors for the four personality pillars (OnchainKit)
+        // Soft pastel colors for the four personality pillars - friendly & approachable
         const pillarColors = [
-          'bg-purple-500', // Vision & Values (The "Why")
-          'bg-blue-500',   // Building & Work Style (The "How")
-          'bg-green-500',  // Chaos & Risk Tolerance (The "Risk")
-          'bg-pink-500',   // Connection & Social Style (The "Social")
+          'bg-rose-400',   // Vision & Values (warm & thoughtful)
+          'bg-violet-400', // Building & Work Style (creative & thoughtful)
+          'bg-emerald-400', // Risk Tolerance (balanced & calm)
+          'bg-sky-400',    // Connection & Social Style (open & friendly)
         ];
 
-        const colorClass = pillarColors[index] || 'bg-gray-500';
+        const colorClass = pillarColors[index] || 'bg-slate-300';
 
         return (
           <div key={score.category} className="space-y-2">
@@ -46,10 +46,10 @@ export function PersonalityRadar({ scores }: PersonalityRadarProps) {
         );
       })}
 
-      {/* Simple center dot for "radar" aesthetic */}
+      {/* Social center dot - soft and inclusive */}
       <div className="relative flex items-center justify-center mt-6">
-        <div className="absolute w-24 h-24 rounded-full bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-pink-500/20"></div>
-        <div className="relative w-6 h-6 rounded-full bg-primary"></div>
+        <div className="absolute w-24 h-24 rounded-full bg-gradient-to-br from-rose-200/40 via-violet-200/40 to-sky-200/40"></div>
+        <div className="relative w-6 h-6 rounded-full bg-gradient-to-br from-primary-light to-accent"></div>
       </div>
     </div>
   );

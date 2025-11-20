@@ -4,6 +4,9 @@ import { useMiniKit, useViewCast } from "@coinbase/onchainkit/minikit";
 import { Wallet } from "./components/Wallet";
 import { PersonalityRadar } from "./components/PersonalityRadar";
 import { SwipeContainer } from "./components/SwipeContainer";
+import { CardSlider } from "./components/CardSlider";
+import { useMintPersonalityBadge } from "./lib/nft";
+import { CompatibilityCard } from "./lib/types";
 
 interface QuizQuestion {
   id: string;
@@ -312,6 +315,8 @@ export default function Home() {
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [profileDescription, setProfileDescription] = useState('');
   const [profileTags, setProfileTags] = useState<string[]>([]);
+  const [swipeCards, setSwipeCards] = useState<CompatibilityCard[]>([]);
+  const [currentSwipeIndex, setCurrentSwipeIndex] = useState(0);
 
   // Generate personality name based on dominant traits
   const generatePersonalityName = (vector: PersonalityVector): string => {
@@ -337,6 +342,34 @@ export default function Home() {
     else name += 'Navigator';
 
     return name.trim();
+  };
+
+  // NFT Minting hook
+  const personalityType = generatePersonalityName(userVector);
+  const { mintBadge, result: mintResult, isPending: isMinting, isConfirming } = useMintPersonalityBadge(
+    personalityType,
+    Math.round(userVector.vision),
+    Math.round(userVector.risk),
+    Math.round(userVector.style),
+    Math.round(userVector.action),
+    selectedTrack as 'Build' | 'Connect',
+    context?.user?.fid?.toString() || '',
+    context?.user?.username || ''
+  );
+
+  // Handle NFT minting
+  const handleMintBadge = async () => {
+    try {
+      const _result = mintBadge();
+      if (_result?.success === false) {
+        alert(`Minting failed: ${_result.error}`);
+        return;
+      }
+      // Wait for confirmation
+      // The hook handles the transaction confirmation
+    } catch (error) {
+      alert(`Minting failed: ${error}`);
+    }
   };
 
   // Initialize the miniapp
@@ -391,6 +424,108 @@ export default function Home() {
     localStorage.setItem('dare-app-onboarding-seen', 'true');
   };
 
+  // Generate mock compatibility cards for testing CardSlider
+  const generateMockCards = (): CompatibilityCard[] => {
+    return [
+      {
+        profile: {
+          fid: '201',
+          username: 'sarah_builder',
+          displayName: 'Sarah Chen',
+          pfpUrl: 'https://picsum.photos/200/200?random=10',
+          track: 'Build' as const,
+          personalityScores: [],
+          minted: true,
+          tags: ['Solidity', 'DeFi', 'Security', 'ETH']
+        },
+        matchPercentage: 92,
+        keyAlignmentTags: ['Both prioritize security', 'Similar building philosophy'],
+        popNftProfile: 'Visionary Security Builder'
+      },
+      {
+        profile: {
+          fid: '202',
+          username: 'alex_artist',
+          displayName: 'Alex Rivera',
+          pfpUrl: 'https://picsum.photos/200/200?random=11',
+          track: 'Connect' as const,
+          personalityScores: [],
+          minted: true,
+          bio: 'Bridging art and tech. Creating immersive NFT experiences.',
+          tags: ['NFTs', 'Art', 'Augmented Reality', 'Community']
+        },
+        matchPercentage: 87,
+        keyAlignmentTags: ['Creative and technical synergy', 'Growth mindset alignment'],
+        popNftProfile: 'Immersive Experience Creator'
+      },
+      {
+        profile: {
+          fid: '203',
+          username: 'jordan_defi',
+          displayName: 'Jordan Park',
+          pfpUrl: 'https://picsum.photos/200/200?random=12',
+          track: 'Build' as const,
+          personalityScores: [],
+          minted: true,
+          bio: 'Passionate about financial freedom. Building autonomous money protocols.',
+          tags: ['DeFi', 'ZKPs', 'Autonomous', 'Solidity']
+        },
+        matchPercentage: 89,
+        keyAlignmentTags: ['DeFi vision shared', 'Technical capabilities match'],
+        popNftProfile: 'Autonomous Finance Architect'
+      },
+      {
+        profile: {
+          fid: '204',
+          username: 'maya_designer',
+          displayName: 'Maya Johnson',
+          pfpUrl: 'https://picsum.photos/200/200?random=13',
+          track: 'Connect' as const,
+          personalityScores: [],
+          minted: true,
+          bio: 'UX designer with a background in sociology. Making web3 accessible.',
+          tags: ['UX', 'Design', 'Psychology', 'Education']
+        },
+        matchPercentage: 83,
+        keyAlignmentTags: ['Human-centered approach', 'Educational values shared'],
+        popNftProfile: 'Human-Centered Innovator'
+      },
+      {
+        profile: {
+          fid: '205',
+          username: 'drew_gaming',
+          displayName: 'Drew Kim',
+          pfpUrl: 'https://picsum.photos/200/200?random=14',
+          track: 'Build' as const,
+          personalityScores: [],
+          minted: true,
+          bio: 'Game developer exploring blockchain for gaming economies.',
+          tags: ['Gaming', 'Blockchain', 'Rust', 'Unity']
+        },
+        matchPercentage: 78,
+        keyAlignmentTags: ['Gaming and web3 crossover', 'Creative technical challenges'],
+        popNftProfile: 'Blockchain Gaming Pioneer'
+      }
+    ];
+  };
+
+  // Handle CardSlider swipe actions
+  const handleCardSliderSwipe = (action: PersonalityFeedbackType) => {
+    console.log('Swiped:', action, 'on card index:', currentSwipeIndex);
+
+    // Here you would typically send the action to your backend API
+    // For now, we'll just log it
+  };
+
+  const handleCardSliderComplete = () => {
+    if (currentSwipeIndex < swipeCards.length - 1) {
+      setCurrentSwipeIndex(prev => prev + 1);
+    } else {
+      alert('No more compatible profiles! Check back later.');
+      setCurrentSwipeIndex(0);
+    }
+  };
+
   if (!isFrameReady) {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
@@ -403,13 +538,13 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pixel-art pixel-filter">
       <Wallet />
 
       {/* Onboarding Modal */}
       {showOnboarding && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 max-w-sm w-full mx-4 shadow-lg">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 pixel-bg">
+          <div className="pixel-container pixel-shadow max-w-sm w-full mx-4">
             <div className="text-center mb-6">
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -443,7 +578,7 @@ export default function Home() {
             </ul>
             <button
               onClick={handleCloseOnboarding}
-              className="w-full bg-primary text-white hover:bg-primary/90 rounded-lg min-h-11 font-medium transition-colors"
+              className="pixel-button w-full bg-primary text-white hover:bg-primary/90 min-h-11 font-medium"
             >
               Get Started
             </button>
@@ -451,34 +586,34 @@ export default function Home() {
         </div>
       )}
 
-    <div className="flex flex-col min-h-screen">
       {/* User Profile Header */}
       {context?.user && isMinted && (
-          <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3">
-            <div className="flex items-center gap-3 max-w-md mx-auto">
-              <img
-                src={context.user.pfpUrl}
-                alt={context.user.username}
-                className="w-10 h-10 rounded-full"
-              />
-              <div>
-                <p className="font-medium text-gray-900 dark:text-gray-100">
-                  @{context.user.username}
-                </p>
-                <p className="text-xs text-gray-600 dark:text-gray-400">
-                  {context.user.displayName}
-                </p>
-              </div>
+        <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3">
+          <div className="flex items-center gap-3 max-w-md mx-auto">
+            <img
+              src={context.user.pfpUrl}
+              alt={context.user.username}
+              className="w-10 h-10 rounded-full"
+            />
+            <div>
+              <p className="font-medium text-gray-900 dark:text-gray-100">
+                @{context.user.username}
+              </p>
+              <p className="text-xs text-gray-600 dark:text-gray-400">
+                {context.user.displayName}
+              </p>
             </div>
           </div>
-        )}
+        </div>
+      )}
 
+      <div className="flex flex-col min-h-screen">
         <main className="flex-1 px-4 py-6 max-w-md mx-auto w-full">
           <header className="text-center mb-6">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-1">
+            <h1 className="text-2xl font-bold font-pixel text-gray-900 dark:text-gray-100 mb-1">
               DareUP
             </h1>
-            <p className="text-blue-600 text-sm">
+            <p className="text-blue-600 text-sm font-pixel">
               Dare to Meet
             </p>
           </header>
@@ -490,57 +625,57 @@ export default function Home() {
               {/* Main Hero Section */}
               <div className="mb-12">
                 {/* Logo/Icon with gradient background */}
-          <div className="w-24 h-24 bg-linear-to-br from-purple-500 via-pink-500 to-blue-500 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl">
+          <div className="pixel-container w-24 h-24 pixel-shadow pixel-gradient flex items-center justify-center mx-auto mb-8">
                   <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
 
               {/* Main headline */}
-              <h1 className="text-4xl font-bold text-white mb-4 bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent">
+              <h1 className="text-4xl font-bold font-pixel mb-4 pixel-text pixel-gradient">
                   DareUP
                 </h1>
 
                 {/* Subheadline */}
-                <p className="text-lg text-blue-600 mb-8 leading-relaxed">
+                <p className="text-lg pixel-text mb-8 leading-relaxed">
                   Dare to Meet
                 </p>
               </div>
 
               {/* Feature highlights */}
               <div className="grid grid-cols-1 gap-4 mb-12 max-w-sm mx-auto w-full">
-                <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-700">
+                <div className="pixel-container pixel-shadow">
                   <div className="flex items-center space-x-4">
-                    <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900 rounded-xl flex items-center justify-center">
+                    <div className="pixel-container w-10 h-10 flex items-center justify-center">
                       <span className="text-2xl">🧠</span>
                     </div>
                     <div className="text-left">
-                      <h3 className="font-semibold text-gray-900 dark:text-white">Personality First</h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">Deep compatibility matching</p>
+                      <h3 className="pixel-text font-semibold">Personality First</h3>
+                      <p className="pixel-text text-sm">Deep compatibility matching</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-700">
+                <div className="pixel-container pixel-shadow">
                   <div className="flex items-center space-x-4">
-                    <div className="w-10 h-10 bg-pink-100 dark:bg-pink-900 rounded-xl flex items-center justify-center">
+                    <div className="pixel-container w-10 h-10 flex items-center justify-center">
                       <span className="text-2xl">💫</span>
                     </div>
                     <div className="text-left">
-                      <h3 className="font-semibold text-gray-900 dark:text-white">Web3 Native</h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">Crypto creators community</p>
+                      <h3 className="pixel-text font-semibold">Web3 Native</h3>
+                      <p className="pixel-text text-sm">Crypto creators community</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-700">
+                <div className="pixel-container pixel-shadow">
                   <div className="flex items-center space-x-4">
-                    <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-xl flex items-center justify-center">
+                    <div className="pixel-container w-10 h-10 flex items-center justify-center">
                       <span className="text-2xl">🏆</span>
                     </div>
                     <div className="text-left">
-                      <h3 className="font-semibold text-gray-900 dark:text-white">Real Connections</h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">Build, collaborate, connect</p>
+                      <h3 className="pixel-text font-semibold">Real Connections</h3>
+                      <p className="pixel-text text-sm">Build, collaborate, connect</p>
                     </div>
                   </div>
                 </div>
@@ -549,7 +684,7 @@ export default function Home() {
               {/* CTA Button */}
               <button
                 onClick={() => setCurrentStep('track-select')}
-                className="w-full max-w-sm bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-4 px-8 rounded-2xl text-lg shadow-xl transform transition-all duration-200 hover:scale-105 mb-6"
+                className="pixel-button w-full max-w-sm pixel-gradient text-white font-bold py-4 px-8 text-lg pixel-shadow mb-6"
               >
                 Start Your Journey 🚀
               </button>
@@ -578,10 +713,10 @@ export default function Home() {
                     setSelectedTrack('Build');
                     setCurrentStep('quiz');
                   }}
-                  className="w-full p-6 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-xl transition-all duration-200 transform hover:scale-105"
+                  className="w-full p-6 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white pixel-corner transition-all duration-200 transform hover:scale-105"
                 >
                   <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
+                    <div className="w-12 h-12 bg-white/20 pixel-corner flex items-center justify-center">
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                       </svg>
@@ -599,10 +734,10 @@ export default function Home() {
                     setSelectedTrack('Connect');
                     setCurrentStep('quiz');
                   }}
-                  className="w-full p-6 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white rounded-xl transition-all duration-200 transform hover:scale-105"
+                  className="w-full p-6 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white pixel-corner transition-all duration-200 transform hover:scale-105"
                 >
                   <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
+                    <div className="w-12 h-12 bg-white/20 pixel-corner flex items-center justify-center">
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                       </svg>
@@ -642,9 +777,9 @@ export default function Home() {
               {(() => {
                 const question = quizQuestions[currentQuestion];
                 return (
-                  <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+                  <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 pixel-corner p-6">
                     <div className="flex items-center mb-4">
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                      <span className={`px-3 py-1 pixel-corner text-xs font-medium ${
                         question.category === 'Vision & Values' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200' :
                         question.category === 'Building & Work Style' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' :
                         question.category === 'Chaos & Risk Tolerance' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
@@ -663,7 +798,7 @@ export default function Home() {
                         <button
                           key={index}
                           onClick={() => handleAnswer(question.id, option.vectorDelta)}
-                          className="w-full text-left p-4 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-primary transition-all duration-200"
+                          className="w-full text-left p-4 border border-gray-200 dark:border-gray-600 pixel-corner hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-primary transition-all duration-200"
                         >
                           <span className="text-gray-900 dark:text-gray-100">{option.text}</span>
                         </button>
@@ -680,28 +815,64 @@ export default function Home() {
                   Find Your Matches
                 </h2>
                 <p className="text-sm text-gray-600 dark:text-gray-400 text-center mt-2">
-                  Swipe through compatible {selectedTrack?.toLowerCase()}s
+                  {isMinted ? 'Experience premium matching!' : 'Get started by minting your personality badge'}
                 </p>
               </div>
 
-              <SwipeContainer
-                userFid={context?.user?.fid?.toString() || ''}
-                onCardsExhausted={() => {
-                  // Handle when no more cards
-                  alert('No more profiles to show! Check back later.');
-                }}
-              />
+              {isMinted ? (
+                // Premium CardSlider for minted users
+                <>
+                  <CardSlider
+                    cards={swipeCards.length > 0 ? swipeCards : generateMockCards()}
+                    currentIndex={currentSwipeIndex}
+                    onSwipe={handleCardSliderSwipe}
+                    onCardComplete={handleCardSliderComplete}
+                  />
+
+                  <div className="mt-6 text-center">
+                  <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/10 dark:to-pink-900/10 p-4 pixel-corner border border-purple-200 dark:border-purple-700">
+                      <p className="text-sm font-medium text-purple-700 dark:text-purple-300 mb-2">
+                        🎉 Premium Experience Active!
+                      </p>
+                      <p className="text-xs text-purple-600 dark:text-purple-400">
+                        Your nuanced feedback helps our AI learn what you truly want
+                      </p>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                // Fallback for non-minted users
+                <div className="flex flex-col items-center justify-center py-12">
+                  <div className="bg-gray-100 dark:bg-gray-800 rounded-full p-8 mb-6">
+                    <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8V9z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+                    Premium Matching Locked
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-400 text-center mb-6 max-w-sm">
+                    Mint your personality badge to unlock the CardSlider experience with nuanced feedback!
+                  </p>
+                  <button
+                    onClick={() => setCurrentStep('results')}
+                    className="bg-gradient-to-r from-purple-500 to-pink-500 text-white py-3 px-8 pixel-corner pixel-button hover:from-purple-600 hover:to-pink-600 transition-all duration-300 text-lg font-medium shadow-lg"
+                  >
+                    🏅 Mint Badge to Unlock
+                  </button>
+                </div>
+              )}
 
               <div className="mt-6 space-y-3">
                 <button
                   onClick={() => setCurrentStep('results')}
-                  className="w-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg min-h-12 font-medium transition-colors"
+                  className="w-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 pixel-corner pixel-button min-h-12 font-medium transition-colors"
                 >
                   View My Personality Results
                 </button>
                 <button
                   onClick={() => setCurrentStep('profile')}
-                  className="w-full bg-primary text-white hover:bg-primary/90 rounded-lg min-h-12 font-medium transition-colors"
+                  className="w-full bg-primary text-white hover:bg-primary/90 pixel-corner pixel-button min-h-12 font-medium transition-colors"
                 >
                   Edit My Profile
                 </button>
@@ -740,7 +911,7 @@ export default function Home() {
                     value={profileDescription}
                     onChange={(e) => setProfileDescription(e.target.value)}
                     placeholder={`I'm a ${selectedTrack?.toLowerCase()} looking to connect with...`}
-                    className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 resize-none"
+                    className="w-full p-3 border border-gray-300 dark:border-gray-600 pixel-corner bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 resize-none"
                     rows={4}
                   />
                 </div>
@@ -753,7 +924,7 @@ export default function Home() {
                   <input
                     type="text"
                     placeholder="DeFi, NFTs, DAOs, Art... (separate with commas)"
-                    className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                    className="w-full p-3 border border-gray-300 dark:border-gray-600 pixel-corner bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                     value={profileTags.join(', ')}
                     onChange={(e) => {
                       const tags = e.target.value.split(',').map(tag => tag.trim()).filter(tag => tag);
@@ -778,13 +949,13 @@ export default function Home() {
                 <div className="space-y-3 pt-4">
                   <button
                     onClick={() => setCurrentStep('swipe')}
-                    className="w-full bg-primary text-white hover:bg-primary/90 rounded-lg min-h-12 font-medium transition-colors"
+                    className="w-full bg-primary text-white hover:bg-primary/90 pixel-corner pixel-button min-h-12 font-medium transition-colors"
                   >
                     Start Swiping
                   </button>
                   <button
                     onClick={() => setCurrentStep('results')}
-                    className="w-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg min-h-12 font-medium transition-colors"
+                    className="w-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 pixel-corner pixel-button min-h-12 font-medium transition-colors"
                   >
                     Back to Results
                   </button>
@@ -794,7 +965,7 @@ export default function Home() {
           ) : currentStep === 'community' ? (
             <div>
               <div className="mb-6">
-                <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 text-center">
+                <h2 className="text-xl font-bold font-pixel text-gray-900 dark:text-gray-100 text-center">
                   🌟 Web3 Community Hub
                 </h2>
                 <p className="text-sm text-gray-600 dark:text-gray-400 text-center mt-2">
@@ -804,8 +975,8 @@ export default function Home() {
 
               <div className="space-y-4">
                 {/* Discord Links */}
-                <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">
+                <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 pixel-corner p-4">
+                  <h3 className="text-lg font-semibold font-pixel text-gray-900 dark:text-gray-100 mb-3">
                     🎮 Official Communities
                   </h3>
 
@@ -814,10 +985,10 @@ export default function Home() {
                       href="https://discord.gg/cSMGfkCwxX"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block w-full p-4 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white rounded-lg transition-all duration-200 transform hover:scale-105"
+                      className="block w-full p-4 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white pixel-corner pixel-button transition-all duration-200 transform hover:scale-105"
                     >
                       <div className="flex items-center space-x-3">
-                        <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                        <div className="w-10 h-10 bg-white/20 pixel-corner flex items-center justify-center">
                           <span className="text-xl">💬</span>
                         </div>
                         <div className="flex-1">
@@ -834,10 +1005,10 @@ export default function Home() {
                       href="https://portal.cdp.coinbase.com/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block w-full p-4 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-lg transition-all duration-200 transform hover:scale-105"
+                      className="block w-full p-4 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white pixel-corner pixel-button transition-all duration-200 transform hover:scale-105"
                     >
                       <div className="flex items-center space-x-3">
-                        <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                        <div className="w-10 h-10 bg-white/20 pixel-corner flex items-center justify-center">
                           <span className="text-xl">🌐</span>
                         </div>
                         <div className="flex-1">
@@ -863,7 +1034,7 @@ export default function Home() {
                       href="https://warpcast.com/~/channel/web3"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                      className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 pixel-corner hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
                     >
                       <div className="flex items-center space-x-3">
                         <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center">
@@ -881,7 +1052,7 @@ export default function Home() {
                       href="https://warpcast.com/~/channel/crypto"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                      className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 pixel-corner hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
                     >
                       <div className="flex items-center space-x-3">
                         <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
@@ -899,7 +1070,7 @@ export default function Home() {
                       href="https://warpcast.com/~/channel/base"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                      className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 pixel-corner hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
                     >
                       <div className="flex items-center space-x-3">
                         <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
@@ -993,15 +1164,45 @@ export default function Home() {
                 </div>
 
                 <button
-                  onClick={() => {
-                    setIsMinted(true);
-                    setCurrentStep('swipe');
-                    // TODO: Call actual NFT minting API
+                  onClick={async () => {
+                    try {
+                      const result = mintBadge();
+                      if (result?.success === false) {
+                        alert(`Minting failed: ${result.error}`);
+                        return;
+                      }
+                      // For demo purposes - simulate success
+                      setTimeout(() => {
+                        setIsMinted(true);
+                        setCurrentStep('swipe');
+                      }, 2000);
+                    } catch (error) {
+                      console.error('Minting error:', error);
+                      alert('Minting failed. Please try again.');
+                    }
                   }}
-                  className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 rounded-lg min-h-12 font-medium transition-all duration-300 text-lg shadow-lg"
+                  disabled={isMinting || isConfirming}
+                  className="w-full bg-gradient-to-r from-purple-500 to-pink-500 disabled:from-gray-400 disabled:to-gray-500 text-white hover:from-purple-600 hover:to-pink-600 rounded-lg min-h-12 font-medium transition-all duration-300 text-lg shadow-lg disabled:cursor-not-allowed"
                 >
-                  🏅 Mint Match Badge & Unlock
+                  {isMinting ? '⏳ Minting Badge...' : isConfirming ? '✅ Confirming...' : '🏅 Mint Badge & Unlock'}
                 </button>
+
+                {/* Transaction status */}
+                {mintResult?.success && (
+                  <div className="text-center p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
+                    <p className="text-sm text-green-700 dark:text-green-300">
+                      🎉 Badge minted successfully! Transaction: {mintResult.transactionHash}
+                    </p>
+                  </div>
+                )}
+
+                {mintResult?.error && (
+                  <div className="text-center p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg">
+                    <p className="text-sm text-red-700 dark:text-red-300">
+                      ❌ Minting failed: {mintResult.error}
+                    </p>
+                  </div>
+                )}
 
                 <button
                   onClick={handleRestartQuiz}
