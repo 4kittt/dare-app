@@ -30,7 +30,6 @@
     "wagmi": "^2.16.3"
   },
   "devDependencies": {
-    "@danterolle/tilf": "^1.0.0",
     "@eslint/eslintrc": "^3",
     "@farcaster/quick-auth": "^0.0.7",
     "@next/eslint-plugin-next": "^15.3.4",
