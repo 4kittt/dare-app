@@ -1,7 +1,7 @@
 // Core types for DareUp personality matching - Updated for OnchainKit four pillars
 
 export interface PersonalityScore {
-  category: 'Vision & Values' | 'Building & Work Style' | 'Chaos & Risk Tolerance' | 'Connection & Social Style'
+  category: 'Vision & Values' | 'Building & Work Style' | 'Chaos & Risk Tolerance' | 'Connection & Social Style' | 'Builder Score'
   score: number // 0-100
 }
 
@@ -47,16 +47,19 @@ export interface Dare {
   matchId?: string // Optionnel : lié à un match
   type: 'invite' | 'comment' | 'share' | 'custom' // Type d'action requise
   title: string // "Invite a friend to DareUp!"
-  description: string // Description détaillée du dare
+  description?: string // Description détaillée du dare
   targetUrl?: string // URL vers un cast ou un lien spécifique
   targetUsername?: string // Nom d'utilisateur à inviter ou mentionner
+  targetFid?: string // FID reference for Neynar verification
   status: 'pending' | 'completed' | 'expired' // Statut du dare
   createdAt: string
   completedAt?: string
+  verificationHash?: string // Cast hash for Neynar verification
   reward?: {
     type: 'badge' | 'points' | 'nft'
     title: string
-    description: string
+    description?: string
+    value?: number // Points value if type is points
   }
 }
 
@@ -74,6 +77,27 @@ export interface DareProof {
   castUrl?: string // Pour les commentaires/shares
   castHash?: string // Hash du cast pour vérification Neynar
   screenshotUrl?: string // Screenshot si nécessaire
+}
+
+// Points system types
+export interface UserPoints {
+  fid: string
+  totalPoints: number
+  history: Array<{
+    points: number
+    reason: 'dare_complete' | 'referral_bonus' | 'badge_earned' | 'match_boost'
+    timestamp: string
+    referenceId?: string
+  }>
+}
+
+export interface PointsTransaction {
+  id: string
+  fid: string
+  points: number
+  reason: string
+  referenceId?: string // Dare ID, Match ID
+  createdAt: string
 }
 
 // Smart contract types for personality NFT badges
