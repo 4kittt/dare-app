@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "pixelate": "node pixel-assets/pixel-demo-simple.js"
+    "lint": "next lint"
   },
   "dependencies": {
     "@coinbase/onchainkit": "latest",
